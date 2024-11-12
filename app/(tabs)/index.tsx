@@ -1,54 +1,53 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import { Image, StyleSheet, Platform, FlatList, View } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { Ionicons } from "@expo/vector-icons";
+import { TwoColumnLayout } from "@/components/TwoColumnLayout";
+import { Colors } from "@/constants/Colors";
+import { ThemedMainContainer } from "@/components/containers/ThemedMainContainerx";
+import { FlashList } from "@shopify/flash-list";
+
+
+const DATA = [
+  { id: "1", title: "Item 1" },
+  { id: "2", title: "Item 2" },
+  { id: "3", title: "Item 3" },
+];
 
 export default function HomeScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
+      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
+        <Ionicons size={310} name="person" style={styles.headerImage} />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+        <ThemedText type="title">Home</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: "cmd + d", android: "cmd + m" })}
-          </ThemedText>{" "}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this
-          starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{" "}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText>{" "}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
-          directory. This will move the current{" "}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+      <TwoColumnLayout
+        verticalContainerContent={<ThemedText>BOOBA</ThemedText>}
+        horizontalContainerContents={[
+          <ThemedText>ZOOBA</ThemedText>,
+          <ThemedText>GOOBA</ThemedText>,
+        ]}
+        lightColor={Colors.light.icon} // Pass light theme icon color
+        darkColor={Colors.dark.icon} // Pass dark theme icon color
+      />
+      <FlashList
+        data={DATA}
+        renderItem={({ item }) => (
+          <ThemedMainContainer>
+            <ThemedView>
+              <ThemedText>{item.title}</ThemedText>
+            </ThemedView>
+          </ThemedMainContainer>
+        )}
+        estimatedItemSize={100}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+      />
     </ParallaxScrollView>
   );
 }
@@ -68,6 +67,12 @@ const styles = StyleSheet.create({
     width: 290,
     bottom: 0,
     left: 0,
+    position: "absolute",
+  },
+  headerImage: {
+    color: "#808080",
+    bottom: -90,
+    left: -35,
     position: "absolute",
   },
 });
