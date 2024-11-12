@@ -21,9 +21,7 @@ export default function HomeScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <Ionicons size={310} name="person" style={styles.headerImage} />
-      }>
+      >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Home</ThemedText>
       </ThemedView>
@@ -36,6 +34,7 @@ export default function HomeScreen() {
         lightColor={Colors.light.icon} // Pass light theme icon color
         darkColor={Colors.dark.icon} // Pass dark theme icon color
       />
+      <ThemedText>Programs</ThemedText>
       <FlashList
         data={DATA}
         renderItem={({ item }) => (
