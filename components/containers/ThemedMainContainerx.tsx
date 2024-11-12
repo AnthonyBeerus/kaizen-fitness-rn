@@ -59,6 +59,7 @@ export const ThemedMainContainer: React.FC<ThemedMainContainerProps> = ({
 const styles = StyleSheet.create({
   box: {
     width: "100%", // This ensures it takes full width, we can adjust this in specific use cases
+    height: 200,
     justifyContent: "center",
     alignItems: "center",
   },
