@@ -27,7 +27,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore/index"
+        name="explore"
         options={{
           title: "Explore",
           tabBarIcon: ({ color, focused }) => (
@@ -39,7 +39,19 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile/index"
+        name="stats"
+        options={{
+          title: "stats",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "pie-chart" : "pie-chart-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
         options={{
           title: "Profile",
           tabBarIcon: ({ color, focused }) => (
