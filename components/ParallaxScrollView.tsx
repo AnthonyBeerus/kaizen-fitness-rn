@@ -47,7 +47,6 @@ export default function ParallaxScrollView({
   });
 
   return (
-    
     <ThemedView style={styles.container}>
       <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
         {headerImage && ( // Conditionally render the header only if headerImage is provided
