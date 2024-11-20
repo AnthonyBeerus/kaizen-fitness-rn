@@ -1,4 +1,5 @@
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import ThemedButton from "@/components/ThemedButton";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedView } from "@/components/ThemedView";
@@ -96,14 +97,14 @@ export default function AuthScreen() {
                 <View></View>
 
                 <View style={styles.formAction}>
-                  <TouchableOpacity
+                  <ThemedButton
+                    variant="primary"
+                    title="Sign in"
+                    href={"/inside/(tabs)"}
                     onPress={() => {
-                      // handle onPress
-                    }}>
-                    <View style={styles.btn}>
-                      <Text style={styles.btnText}>Sign in</Text>
-                    </View>
-                  </TouchableOpacity>
+                      // handle link
+                    }}
+                  />
                 </View>
 
                 <TouchableOpacity
@@ -118,7 +119,6 @@ export default function AuthScreen() {
             <TouchableOpacity
               onPress={() => {
                 // handle link
-                
               }}>
               <ThemedText style={styles.formFooter}>
                 Don't have an account?{" "}
@@ -170,7 +170,7 @@ export default function AuthScreen() {
         flexBasis: 0,
       },
       formAction: {
-        marginTop: 4,
+        marginTop: 10,
         marginBottom: 16,
       },
       formLink: {
