@@ -15,7 +15,7 @@ export function ThemedTextInput({
     darkColor,
     type = "default",
 }: ThemedTextInputProps) {
-    const color = useThemeColor({ light: lightColor , dark: darkColor  }, 'container');
+    const color = useThemeColor({ light: lightColor , dark: darkColor  }, 'containerBackground');
     const textColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted');
     const [form, setForm] = useState({
         email: "",
