@@ -4,29 +4,21 @@ import { ViewStyle, TextStyle, StyleSheet } from "react-native";
 import { ThemedView, ThemedViewProps } from "../ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
-const Colors = {
-  light: {
-    containerBackground: "#F5F5F5",
-  },
-  dark: {
-    containerBackground: "#1A1A1A",
-  },
-};
+
 
 type ThemedHorizontalContainerProps = ThemedViewProps & {
   style?: ViewStyle;
   textStyle?: TextStyle;
+  lightColor?: string;
+  darkColor?: string;
 };
 
 export const ThemedHorizontalContainer: React.FC<
   ThemedHorizontalContainerProps
 > = ({ style, lightColor, darkColor, ...otherProps }) => {
   const containerBackgroundColor = useThemeColor(
-    {
-      light: Colors.light.containerBackground,
-      dark: Colors.dark.containerBackground,
-    },
-    "background"
+    { light: lightColor, dark: darkColor },
+    "containerBackground"
   );
 
   const padding = 0;

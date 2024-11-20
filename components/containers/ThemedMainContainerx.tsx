@@ -4,18 +4,12 @@ import { ViewStyle, TextStyle, StyleSheet } from "react-native";
 import { ThemedView, ThemedViewProps } from "../ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
-const Colors = {
-  light: {
-    containerBackground: "#F5F5F5", // Light container background
-  },
-  dark: {
-    containerBackground: "#1A1A1A", // Dark container background
-  },
-};
 
 type ThemedMainContainerProps = ThemedViewProps & {
   style?: ViewStyle;
   textStyle?: TextStyle;
+  lightColor?: string;
+  darkColor?: string;
 };
 
 export const ThemedMainContainer: React.FC<ThemedMainContainerProps> = ({
@@ -26,12 +20,10 @@ export const ThemedMainContainer: React.FC<ThemedMainContainerProps> = ({
   ...otherProps
 }) => {
   const containerBackgroundColor = useThemeColor(
-    {
-      light: Colors.light.containerBackground,
-      dark: Colors.dark.containerBackground,
-    },
-    "background"
+    { light: lightColor, dark: darkColor },
+    "containerBackground"
   );
+
 
   const padding = 20;
   const margin = 0;
