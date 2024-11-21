@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, FlatList, View } from "react-native";
+import { Image, StyleSheet, Platform, FlatList, View, Animated } from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -9,6 +9,7 @@ import { TwoColumnLayout } from "@/components/TwoColumnLayout";
 import { Colors } from "@/constants/Colors";
 import { ThemedMainContainer } from "@/components/containers/ThemedMainContainerx";
 import { FlashList } from "@shopify/flash-list";
+import { useRef } from "react";
 
 
 const DATA = [
@@ -21,6 +22,7 @@ export default function HomeScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
+      variant="ThemedHeader"
       >
       <ThemedView variant="default" style={styles.titleContainer}>
         <ThemedText type="title">Home</ThemedText>
