@@ -16,7 +16,7 @@ export function ThemedTextInput({
     type = "default",
 }: ThemedTextInputProps) {
     const color = useThemeColor({ light: lightColor , dark: darkColor  }, 'containerBackground');
-    const textColor = useThemeColor({ light: lightColor, dark: darkColor }, 'muted');
+    const textColor = useThemeColor({ light: lightColor, dark: darkColor }, 'fadedText');
     const [form, setForm] = useState({
         email: "",
         password: "",
