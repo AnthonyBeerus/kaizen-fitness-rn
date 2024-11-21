@@ -28,9 +28,13 @@ export const TwoColumnLayout: React.FC<TwoColumnLayoutProps> = ({
     );
 
     return (
-        <ThemedView style={styles.twoColumnLayout}>
+        <ThemedView
+          variant="default" 
+          style={styles.twoColumnLayout}>
         {/* Left Column: ThemedVerticalContainer */}
-        <ThemedVerticalContainer style={styles.verticalContainer}>
+        <ThemedVerticalContainer 
+          variant="default"
+          style={styles.verticalContainer}>
             <View
             style={[styles.contentContainer, styles.verticalContentContainer]}>
             <Ionicons name="fitness" size={34} color={iconColor} />
@@ -46,7 +50,7 @@ export const TwoColumnLayout: React.FC<TwoColumnLayoutProps> = ({
 
         {/* Right Column: ThemedHorizontalContainers */}
         <View style={styles.rightColumn}>
-            <ThemedHorizontalContainer style={styles.horizontalContainer}>
+            <ThemedHorizontalContainer variant="default" style={styles.horizontalContainer}>
             <View
                 style={[
                 styles.contentContainer,
@@ -63,7 +67,7 @@ export const TwoColumnLayout: React.FC<TwoColumnLayoutProps> = ({
             </View>
             </ThemedHorizontalContainer>
 
-            <ThemedHorizontalContainer style={styles.horizontalContainer}>
+            <ThemedHorizontalContainer variant="default" style={styles.horizontalContainer}>
             <View
                 style={[
                 styles.contentContainer,

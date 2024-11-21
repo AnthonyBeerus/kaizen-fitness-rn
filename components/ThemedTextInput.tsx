@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   default: {
     height: 50,
     paddingHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: 4,
     fontSize: 15,
     fontWeight: "500",
     color: "#222",
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   inputControl: {
     height: 50,
     paddingHorizontal: 16,
-    borderRadius: 12,
+    borderRadius: 4,
     fontSize: 15,
     fontWeight: "500",
     color: "#222",

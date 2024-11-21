@@ -37,7 +37,7 @@ export default function AuthScreen() {
           <ParallaxScrollView
             headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}>
             <KeyboardAwareScrollView>
-              <ThemedView style={styles.header}>
+              <ThemedView variant="default" style={styles.header}>
                 <Image
                   alt="App Logo"
                   resizeMode="contain"
@@ -49,12 +49,10 @@ export default function AuthScreen() {
                   Sign in to <Text style={{ color: "#F04444" }}>KAIZEN</Text>
                 </ThemedText>
 
-                <ThemedText type="subtitle">
-                  Get access to your portfolio and more
-                </ThemedText>
+                <ThemedText type="subtitle">Stay Hard!</ThemedText>
               </ThemedView>
 
-              <ThemedView style={styles.form}>
+              <ThemedView variant="default" style={styles.form}>
                 {/* <View style={styles.input}>
                   <Text style={styles.inputLabel}>Email address</Text>
 
@@ -86,11 +84,13 @@ export default function AuthScreen() {
                   />
                 </View> */}
                 <View style={styles.input}>
-                  <ThemedText>Password</ThemedText>
-                  <ThemedTextInput type="password" />
+                  <ThemedText style={styles.inputLabel}>Password</ThemedText>
+                  <ThemedTextInput type="password" value={form.password} />
                 </View>
                 <View style={styles.input}>
-                  <ThemedText>Email Address</ThemedText>
+                  <ThemedText style={styles.inputLabel}>
+                    Email Address
+                  </ThemedText>
                   <ThemedTextInput type="email" />
                 </View>
 
@@ -193,7 +193,6 @@ export default function AuthScreen() {
       inputLabel: {
         fontSize: 17,
         fontWeight: "600",
-        color: "#222",
         marginBottom: 8,
       },
       inputControl: {

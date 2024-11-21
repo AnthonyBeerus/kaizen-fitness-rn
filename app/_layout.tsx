@@ -30,6 +30,7 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="inside/(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{headerShown: false}}/>
         <Stack.Screen 
           name="modal/index" 
           options={{ 

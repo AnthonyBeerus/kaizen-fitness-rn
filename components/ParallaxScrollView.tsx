@@ -47,7 +47,7 @@ export default function ParallaxScrollView({
   });
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView variant="default"style={styles.container}>
       <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
         {headerImage && ( // Conditionally render the header only if headerImage is provided
           <Animated.View
@@ -59,7 +59,7 @@ export default function ParallaxScrollView({
             {headerImage}
           </Animated.View>
         )}
-        <ThemedView style={styles.content}>{children}</ThemedView>
+        <ThemedView variant="default" style={styles.content}>{children}</ThemedView>
       </Animated.ScrollView>
     </ThemedView>
   );

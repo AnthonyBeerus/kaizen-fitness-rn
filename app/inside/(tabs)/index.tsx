@@ -22,7 +22,7 @@ export default function HomeScreen() {
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       >
-      <ThemedView style={styles.titleContainer}>
+      <ThemedView variant="default" style={styles.titleContainer}>
         <ThemedText type="title">Home</ThemedText>
       </ThemedView>
       <TwoColumnLayout
@@ -38,8 +38,8 @@ export default function HomeScreen() {
       <FlashList
         data={DATA}
         renderItem={({ item }) => (
-          <ThemedMainContainer>
-            <ThemedView>
+          <ThemedMainContainer variant="default">
+            <ThemedView variant="default">
               <ThemedText>{item.title}</ThemedText>
             </ThemedView>
           </ThemedMainContainer>
