@@ -92,11 +92,11 @@ const BarChartScreen = () => {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}>
-      <ThemedView>
+      <ThemedView variant={"default"}>
         <ThemedText type="title"> Walk & Run Activity</ThemedText>
         <AnimatedText selectedValue={selectedValue} />
       </ThemedView>
-      <ThemedView style={styles.canvas}>
+      <ThemedView style={styles.canvas} variant={"default"}>
         <ThemedText type="subtitle" style={styles.textSteps}>
           {selsctedDay} Steps
         </ThemedText>
@@ -115,8 +115,7 @@ const BarChartScreen = () => {
                 barWidth={barWidth}
                 graphHeight={graphHeight}
                 label={dataPoint.label}
-                selectedBar={selectedBar}
-              />
+                selectedBar={selectedBar} lightColor={""} darkColor={""}              />
               <XAxisText
                 x={x(dataPoint.label)!}
                 y={canvasHeight}

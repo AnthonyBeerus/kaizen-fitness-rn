@@ -15,6 +15,8 @@ type Props = {
   graphHeight: number;
   label: string;
   selectedBar: SharedValue<string | null>;
+  lightColor: string;
+  darkColor: string;
 };
 
 const BarPath = ({
@@ -25,15 +27,17 @@ const BarPath = ({
   graphHeight,
   label,
   selectedBar,
+  lightColor,
+  darkColor
 }: Props) => {
 
   const activeColor = useThemeColor(
-    { light: "#F04444", dark: "#F04444" }, // Active text color
-    "text"
+    { light: lightColor, dark: darkColor }, // Active text color
+    "brandColor"
   );
   const mutedColor = useThemeColor(
-    { light: "#d1d0c5", dark: "#1A1A1A" }, // Muted text color
-    "muted"
+    { light: lightColor, dark: darkColor }, // Muted text color
+    "containerBackground"
   );
 
   const color = useDerivedValue(() => {

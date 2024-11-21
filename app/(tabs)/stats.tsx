@@ -27,10 +27,10 @@ export default function StatsScreen() {
       <FlashList
         data={DATA}
         renderItem={({ item }) => (
-          <Link asChild href="../stats/modal">
+          <Link asChild href="../stats/stats">
             <Pressable onPress={() => console.log(item.title)}>
-              <ThemedMainContainer>
-                <ThemedView>
+              <ThemedMainContainer variant={"default"}>
+                <ThemedView variant={"inContainer"}>
                   <ThemedText>{item.title}</ThemedText>
                 </ThemedView>
               </ThemedMainContainer>

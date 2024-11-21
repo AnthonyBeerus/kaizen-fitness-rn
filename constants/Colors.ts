@@ -3,7 +3,6 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-import second from "@/app/modal/second";
 
 const tintColorLight = "#F04444";
 const tintColorDark = "#F04444";
@@ -15,6 +14,7 @@ export const Colors = {
     containerBackground: "#D3D7D9",
     tint: tintColorLight,
     icon: "#687076",
+    brandColor: "#F04444",
     brandColoricon: "#F04444",
     tabIconDefault: "#687076",
     tabIconSelected: tintColorLight,
@@ -28,6 +28,7 @@ export const Colors = {
     containerBackground: "#1A1A1A",
     tint: tintColorDark,
     icon: "#9BA1A6",
+    brandColor: "#F04444",
     brandColoricon: "#F04444",
     tabIconDefault: "#F04444",
     tabIconSelected: tintColorDark,

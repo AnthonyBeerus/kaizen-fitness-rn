@@ -27,28 +27,28 @@ export default function ProfileScreen() {
         darkColor={Colors.dark.icon} // Pass dark theme icon color
       />
       <ThemedText type="subtitle">Stuff</ThemedText>
-      <ThemedMainContainer>
+      <ThemedMainContainer variant={"inContainer"}>
         <ThemedText>Stuff</ThemedText>
       </ThemedMainContainer>
-      <ThemedMainContainer>
+      <ThemedMainContainer variant={"inContainer"}>
         <ThemedText>More Stuff</ThemedText>
       </ThemedMainContainer>
-      <ThemedMainContainer>
+      <ThemedMainContainer variant={"inContainer"}>
         <ThemedText>Even Stuff</ThemedText>
       </ThemedMainContainer>
-      <ThemedMainContainer>
+      <ThemedMainContainer variant={"inContainer"}>
         <ThemedText> The Stuff Ends</ThemedText>
       </ThemedMainContainer>
-      <ThemedMainContainer>
+      <ThemedMainContainer variant={"inContainer"}>
         <ThemedText>Just kidding lol! MORE Stuff</ThemedText>
       </ThemedMainContainer>
-      <ThemedMainContainer>
+      <ThemedMainContainer variant={"inContainer"}>
         <ThemedText>And more stuff</ThemedText>
       </ThemedMainContainer>
-      <ThemedMainContainer>
+      <ThemedMainContainer variant={"inContainer"}>
         <ThemedText>And even more stuff</ThemedText>
       </ThemedMainContainer>
-      <ThemedMainContainer>
+      <ThemedMainContainer variant={"inContainer"}>
         <ThemedText>And the stuff ends here</ThemedText>
       </ThemedMainContainer>
     </ParallaxScrollView>

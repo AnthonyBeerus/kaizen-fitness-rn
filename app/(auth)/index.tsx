@@ -22,7 +22,7 @@ import {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-export default function AuthScreen() {
+export default function LoginScreen() {
     const [form, setForm] = useState({
         email: "",
         password: "",
@@ -42,7 +42,7 @@ export default function AuthScreen() {
                   alt="App Logo"
                   resizeMode="contain"
                   style={styles.headerImg}
-                  source={require("../assets/images/brand-logo.png")}
+                  source={require("../../assets/images/brand-logo.png")}
                 />
 
                 <ThemedText type="title">
@@ -100,7 +100,7 @@ export default function AuthScreen() {
                   <ThemedButton
                     variant="primary"
                     title="Sign in"
-                    href={"/inside/(tabs)"}
+                    href={"/(tabs)"}
                     onPress={() => {
                       // handle link
                     }}

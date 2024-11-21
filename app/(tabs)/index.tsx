@@ -26,7 +26,7 @@ export default function HomeScreen() {
         <ThemedText type="title">Home</ThemedText>
       </ThemedView>
       <TwoColumnLayout
-        verticalContainerContent={<ThemedText>BOOBA</ThemedText>}
+        verticalContainerContent={<ThemedText>ROOBA</ThemedText>}
         horizontalContainerContents={[
           <ThemedText>ZOOBA</ThemedText>,
           <ThemedText>GOOBA</ThemedText>,
@@ -39,7 +39,7 @@ export default function HomeScreen() {
         data={DATA}
         renderItem={({ item }) => (
           <ThemedMainContainer variant="default">
-            <ThemedView variant="default">
+            <ThemedView variant="inContainer">
               <ThemedText>{item.title}</ThemedText>
             </ThemedView>
           </ThemedMainContainer>
