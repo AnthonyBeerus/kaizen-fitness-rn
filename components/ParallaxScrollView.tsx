@@ -11,6 +11,9 @@ import Animated, {
 import { ThemedView } from "@/components/ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "./ThemedText";
+import { ThemedMainContainer } from "./containers/ThemedMainContainerx";
+import ThemedButton from "./ThemedButton";
+import { Button, IconButton } from "react-native-paper";
 
 const HEADER_MAX_HEIGHT = 200;
 const HEADER_MIN_HEIGHT = 100;
@@ -19,7 +22,7 @@ const SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 type Props = PropsWithChildren<{
   headerImage?: ReactElement | null;
   headerBackgroundColor: { dark: string; light: string };
-  variant?: "default" | "ThemedHeader" | "headerImage"; // Optional variants
+  variant?: "default" | "ThemedHeader" | "headerImage" | "staticHeader"; // Optional variants
   lightColor?: string;
   darkColor?: string;
 }>;
@@ -30,7 +33,7 @@ export default function ParallaxScrollView({
   headerBackgroundColor,
   variant = "default",
   lightColor,
-  darkColor
+  darkColor,
 }: Props) {
   const colorScheme = useColorScheme() ?? "light";
   const outputRangeColor1 = useThemeColor(
@@ -71,11 +74,19 @@ export default function ParallaxScrollView({
       {variant === "headerImage" && headerImage && (
         <Animated.View
           style={[
-            styles.header,
+            styles.headerImage,
             { backgroundColor: headerBackgroundColor[colorScheme] },
           ]}>
           {headerImage}
         </Animated.View>
+      )}
+
+      {/* Static Header for "staticHeader" */}
+      {variant === "staticHeader" && (
+        <ThemedView variant="default" style={[styles.staticHeader, {backgroundColor: outputRangeColor1}]}>
+          <View style={styles.headerTop}>
+          </View>
+        </ThemedView>
       )}
 
       {/* ScrollView with padding for the header */}
@@ -83,7 +94,12 @@ export default function ParallaxScrollView({
         ref={scrollRef}
         scrollEventThrottle={5}
         contentContainerStyle={{
-          paddingTop: variant === "ThemedHeader" ? HEADER_MAX_HEIGHT : 0, // Offset the content
+          paddingTop:
+            variant === "ThemedHeader"
+              ? HEADER_MAX_HEIGHT
+              : variant === "staticHeader"
+              ? HEADER_MIN_HEIGHT
+              : 0, // Offset the content
         }}
         onScroll={RNAnimated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -102,9 +118,20 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10,
   },
-  header: {
+  headerImage: {
     height: HEADER_MAX_HEIGHT,
     overflow: "hidden",
+  },
+  staticHeader: {
+    justifyContent: "space-between",
+    padding: 20,
+    left: 0,
+    right: 0,
+    position: "absolute",
+    top: 0,
+    zIndex: 1,
+    paddingTop: 25,
+    height: HEADER_MIN_HEIGHT, // Set height for static header
   },
   content: {
     flex: 1,
@@ -125,5 +152,35 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontWeight: "bold",
     fontSize: 20,
+  },
+  headerTop: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  avatarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    backgroundColor: "green",
+  },
+  avatarImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  avatarText: {
+    fontSize: 16,
   },
 });
