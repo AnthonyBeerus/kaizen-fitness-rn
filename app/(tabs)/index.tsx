@@ -22,11 +22,8 @@ export default function HomeScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      variant="staticHeader"
-      >
-      <ThemedView variant="default" style={styles.titleContainer}>
-        <ThemedText type="title">Home</ThemedText>
-      </ThemedView>
+      variant="headerImage">
+      <ThemedSearchbar />
       <TwoColumnLayout
         verticalContainerContent={<ThemedText>ROOBA</ThemedText>}
         horizontalContainerContents={[
