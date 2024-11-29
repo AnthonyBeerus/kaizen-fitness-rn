@@ -31,16 +31,28 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack
         screenOptions={{
-          headerStyle: {},
           header: ({ options }) => (
-            <ThemedHeader title={options.title ?? "Default Title"} />
+            <ThemedHeader
+              variant="backAction"
+              title={options.title ?? "Default Title"}
+            />
           ),
         }}>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
           name="stats/stats"
-          options={{ headerShown: true, title: "Stats" }}
+          options={{
+            headerShown: true,
+            title: "Stats",
+            header: ({ options }) => (
+              <ThemedHeader
+                variant="backAction"
+                icon='cog'
+                title={options.title ?? "Default Title"}
+              />
+            ),
+          }}
         />
         <Stack.Screen name="+not-found" />
       </Stack>
