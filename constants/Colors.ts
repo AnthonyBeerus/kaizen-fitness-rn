@@ -12,10 +12,10 @@ export const Colors = {
   light: {
     text: "#11181C",
     fadedText: "#929BA0",
-    background: "#E9EBEC",
-    containerBackground: "#D3D7D9",
+    background: "#e8e5e3",
+    containerBackground: "#faf7f6",
     tint: tintColorLight,
-    icon: "#687076",
+    icon: "#696766",
     brandColor: "#F04444",
     brandColoricon: "#F04444",
     tabIconDefault: "#687076",
