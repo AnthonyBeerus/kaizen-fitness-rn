@@ -1,14 +1,13 @@
 import React from "react";
 import { StyleSheet, Platform, View, Pressable } from "react-native";
-import { Link, Stack } from "expo-router";
+import { Link } from "expo-router";
 import { ThemedText } from "@/components/ThemedText";
-import { TwoColumnLayout } from "@/components/TwoColumnLayout";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedMainContainer } from "@/components/containers/ThemedMainContainerx";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { Colors } from "@/constants/Colors"; // Import the Colors for light and dark theme colors
 import FlashList from "@shopify/flash-list/dist/FlashList";
 import { ThemedView } from "@/components/ThemedView";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const DATA = [
   { id: "1", title: "Stat 1" },
@@ -20,9 +19,8 @@ export default function StatsScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <Ionicons size={310} name="pie-chart" style={styles.headerImage} />
-      }>
+      variant="headerImage"
+      >
       <ThemedText type="title">Charts</ThemedText>
       <FlashList
         data={DATA}
@@ -43,6 +41,10 @@ export default function StatsScreen() {
     </ParallaxScrollView>
   );
 }
+
+export const options = {
+  headerShown: false, // This removes the header for the StatsScreen
+};
 
 const styles = StyleSheet.create({
   headerImage: {

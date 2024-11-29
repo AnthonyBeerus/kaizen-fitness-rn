@@ -5,6 +5,7 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Animated } from 'react-native';
+import ThemedHeader from '@/components/ThemedHeader';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -14,17 +15,20 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
-
+        header: ({ options }) => (
+          <ThemedHeader title={options.title ?? "Default Title"} />
+        ),
         tabBarStyle: {
           backgroundColor: Colors[colorScheme ?? "light"].background,
         },
       }}>
       <Tabs.Screen
         name="index"
-
         options={{
           title: "Home",
+          header: ({ options }) => (
+            <ThemedHeader title={options.title ?? "Default Title"} />
+          ),
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "home" : "home-outline"}
