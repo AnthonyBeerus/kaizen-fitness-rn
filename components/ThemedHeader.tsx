@@ -12,10 +12,10 @@ interface ThemedHeaderProps {
     title: string;
     lightColor?: string;
     darkColor?: string;
-    
+    variant?: "default" | "backAction";
 }
 
-const ThemedHeader: React.FC<ThemedHeaderProps> = ({ title, icon, lightColor, darkColor }) => {
+const ThemedHeader: React.FC<ThemedHeaderProps> = ({ title, icon, lightColor, darkColor, variant = "default" }) => {
   const navigation = useNavigation();
 
   const iconColor = useThemeColor({ light: lightColor, dark: darkColor }, "icon");
@@ -23,19 +23,38 @@ const ThemedHeader: React.FC<ThemedHeaderProps> = ({ title, icon, lightColor, da
 
   return (
     <ThemedView style={styles.container} variant={"default"}>
-
       <Appbar.Header style={[{ backgroundColor }]}>
-        <ThemedView variant={"default"} style={styles.headerContent}>
-          <IconButton
-            icon="chevron-left"
-            size={30}
-            onPress={navigation.goBack}
-            iconColor={iconColor}
-            style={styles.backButton}
-          />
-          <ThemedText style={styles.title}>{title}</ThemedText>
-          <Appbar.Action size={30} icon="dots-vertical" style={[styles.backButton]} iconColor={iconColor}/>
-        </ThemedView>
+        {variant === "backAction" && (
+          <ThemedView variant={"default"} style={styles.headerContent}>
+            <IconButton
+              icon="chevron-left"
+              size={30}
+              onPress={navigation.goBack}
+              iconColor={iconColor}
+              style={styles.backButton}
+            />
+            <ThemedText style={styles.backactiontitle}>{title}</ThemedText>
+            <Appbar.Action
+              size={30}
+              icon={icon ?? "dots-vertical"}
+              style={[styles.backButton]}
+              iconColor={iconColor}
+            />
+          </ThemedView>
+        )}
+        {variant === "default" && (
+          <ThemedView variant={"default"} style={styles.headerContent}>
+            <ThemedText style={styles.title}>{title}</ThemedText>
+            <Appbar.Action
+              size={30}
+              icon="account"
+              style={[styles.backButton]}
+              iconColor={iconColor}
+              onPress={() => null}
+            />
+          </ThemedView>
+        )}
+
       </Appbar.Header>
     </ThemedView>
   );
@@ -55,13 +74,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    paddingTop: 20,
     
+  },
+  backactiontitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    flex: 1,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center",
-    flex: 3,
+    paddingLeft: 20,
+    flex: 1,
   },
 });
 
