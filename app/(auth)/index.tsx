@@ -12,15 +12,15 @@ import {
 import React, { useState } from "react";
 import {
   StyleSheet,
-  SafeAreaView,
   View,
   Image,
   Text,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
+import { TextInput } from "react-native-paper";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Button } from "react-native-paper";
 
 export default function LoginScreen() {
     const [form, setForm] = useState({
@@ -28,7 +28,7 @@ export default function LoginScreen() {
         password: "",
     });
     const colorScheme = useColorScheme();
-
+    const [text, setText] = React.useState("");
     const buttonBrandColor = colorScheme === "dark" ? "#F04444" : "#075eec";
 
     return (
@@ -83,18 +83,14 @@ export default function LoginScreen() {
                     value={form.password}
                   />
                 </View> */}
-                <View style={styles.input}>
-                  <ThemedText style={styles.inputLabel}>Password</ThemedText>
+                <ThemedText style={styles.inputLabel}>Password</ThemedText>
+                <ThemedView style={styles.input} variant={"inContainer"}>
                   <ThemedTextInput type="password" value={form.password} />
-                </View>
-                <View style={styles.input}>
-                  <ThemedText style={styles.inputLabel}>
-                    Email Address
-                  </ThemedText>
+                </ThemedView>
+                <ThemedText style={styles.inputLabel}>Email Address</ThemedText>
+                <ThemedView style={styles.input} variant={"inContainer"}>
                   <ThemedTextInput type="email" />
-                </View>
-
-                <View></View>
+                </ThemedView>
 
                 <View style={styles.formAction}>
                   <ThemedButton

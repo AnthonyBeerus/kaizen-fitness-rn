@@ -5,7 +5,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 export type ThemedViewProps = ViewProps & {
   lightColor?: string;
   darkColor?: string;
-  variant: "default" | "inContainer"
+  variant: "default" | "inContainer" | "transparent";
 };
 
 export function ThemedView({ style, lightColor, darkColor, variant, ...otherProps }: ThemedViewProps) {
@@ -15,6 +15,7 @@ export function ThemedView({ style, lightColor, darkColor, variant, ...otherProp
     dark: darkColor,
     },"containerBackground"
   );
+  const transparent = useThemeColor({ light: lightColor, dark: darkColor }, 'transparent');
 
   return (
     <View
@@ -23,7 +24,8 @@ export function ThemedView({ style, lightColor, darkColor, variant, ...otherProp
           ? { backgroundColor: backgroundColor }
           : variant === "inContainer"
           ? { backgroundColor: inContainerColor }
-          : undefined,
+          : { backgroundColor: transparent },
+
         style,
       ]}
       {...otherProps}

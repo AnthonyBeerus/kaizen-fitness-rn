@@ -10,6 +10,9 @@ import { Colors } from "@/constants/Colors";
 import { ThemedMainContainer } from "@/components/containers/ThemedMainContainerx";
 import { FlashList } from "@shopify/flash-list";
 import { useRef } from "react";
+import { Searchbar, SegmentedButtons } from "react-native-paper";
+import ThemedSearchbar from "@/components/ThemedSearchbar";
+import React from "react";
 
 
 const DATA = [
@@ -19,6 +22,7 @@ const DATA = [
 ];
 
 export default function HomeScreen() {
+  const [value, setValue] = React.useState("");
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -33,7 +37,13 @@ export default function HomeScreen() {
         lightColor={Colors.light.icon} // Pass light theme icon color
         darkColor={Colors.dark.icon} // Pass dark theme icon color
       />
-      <ThemedText>Programs</ThemedText>
+      <ThemedView variant={"default"}
+        style={{ flexDirection: "row",  }}
+      > 
+        <ThemedText>Programs</ThemedText>
+        
+      </ThemedView>
+      
       <FlashList
         data={DATA}
         renderItem={({ item }) => (

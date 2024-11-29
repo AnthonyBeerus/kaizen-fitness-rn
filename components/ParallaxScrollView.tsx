@@ -13,10 +13,10 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { ThemedText } from "./ThemedText";
 import { ThemedMainContainer } from "./containers/ThemedMainContainerx";
 import ThemedButton from "./ThemedButton";
-import { Button, IconButton } from "react-native-paper";
+import { Button, IconButton, Title } from "react-native-paper";
 
 const HEADER_MAX_HEIGHT = 200;
-const HEADER_MIN_HEIGHT = 100;
+const HEADER_MIN_HEIGHT = 120;
 const SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 type Props = PropsWithChildren<{
@@ -25,6 +25,8 @@ type Props = PropsWithChildren<{
   variant?: "default" | "ThemedHeader" | "headerImage" | "staticHeader"; // Optional variants
   lightColor?: string;
   darkColor?: string;
+  title?: string;
+  subtitle?: string;
 }>;
 
 export default function ParallaxScrollView({
@@ -34,6 +36,8 @@ export default function ParallaxScrollView({
   variant = "default",
   lightColor,
   darkColor,
+  title,
+  subtitle,
 }: Props) {
   const colorScheme = useColorScheme() ?? "light";
   const outputRangeColor1 = useThemeColor(
@@ -66,7 +70,8 @@ export default function ParallaxScrollView({
       {/* Dynamic Header for "ThemedHeader" */}
       {variant === "ThemedHeader" && (
         <RNAnimated.View style={[styles.dynamicHeader, dynamicHeaderStyle]}>
-          <ThemedText style={styles.headerTitle}>Header Content</ThemedText>
+          <ThemedText style={styles.headerTitle}>{title}</ThemedText>
+          <ThemedText style={styles.headerSubtitle}>{subtitle}</ThemedText>
         </RNAnimated.View>
       )}
 
@@ -83,8 +88,17 @@ export default function ParallaxScrollView({
 
       {/* Static Header for "staticHeader" */}
       {variant === "staticHeader" && (
-        <ThemedView variant="default" style={[styles.staticHeader, {backgroundColor: outputRangeColor1}]}>
+        <ThemedView
+          variant="default"
+          style={[styles.staticHeader, { backgroundColor: outputRangeColor2 }]}>
           <View style={styles.headerTop}>
+            <View style={styles.headerLeft}>
+              <ThemedText style={styles.headerTitle}>{title}</ThemedText>
+              <ThemedText style={styles.headerSubtitle}>{subtitle}</ThemedText>
+            </View>
+            <ThemedView
+              style={styles.headerRight}
+              variant={"inContainer"}></ThemedView>
           </View>
         </ThemedView>
       )}
@@ -124,13 +138,13 @@ const styles = StyleSheet.create({
   },
   staticHeader: {
     justifyContent: "space-between",
-    padding: 20,
+    paddingVertical: 40,
+    paddingHorizontal: 20,
     left: 0,
     right: 0,
     position: "absolute",
     top: 0,
     zIndex: 1,
-    paddingTop: 25,
     height: HEADER_MIN_HEIGHT, // Set height for static header
   },
   content: {
@@ -153,6 +167,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
   },
+  headerSubtitle: {
+    fontSize: 16,
+  },
   headerTop: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -160,8 +177,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   headerLeft: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
     justifyContent: "space-between",
   },
   headerRight: {

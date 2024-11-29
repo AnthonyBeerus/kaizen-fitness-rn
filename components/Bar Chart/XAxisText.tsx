@@ -22,7 +22,7 @@ const XAxisText = ({ x, y, text, selectedBar }: Props) => {
     "text"
   );
   const mutedColor = useThemeColor(
-    { light: "#d1d0c5", dark: "#777777" }, // Muted text color
+    { light: "#929BA0", dark: "#3D3D3D" }, // Muted text color
     "muted"
   );
 

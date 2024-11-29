@@ -4,6 +4,7 @@
  */
 
 
+
 const tintColorLight = "#F04444";
 const tintColorDark = "#F04444";
 
@@ -22,6 +23,7 @@ export const Colors = {
     muted: "#d1d0c5",
     primaryButton: "#F04444",
     secondaryButton: "#687076",
+    transparent: "transparent",
   },
   dark: {
     text: "#ECEDEE",
@@ -37,5 +39,6 @@ export const Colors = {
     muted: "#777777",
     primaryButton: "#F04444",
     secondaryButton: "#1A1A1A",
+    transparent: "transparent",
   },
 };

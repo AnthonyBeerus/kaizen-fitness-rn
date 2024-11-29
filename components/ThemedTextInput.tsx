@@ -46,10 +46,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     fontSize: 15,
     fontWeight: "500",
-    color: "#222",
-    borderWidth: 1,
-    borderColor: "#C9D3DB",
-    borderStyle: "solid",
   },
   input: {
     marginBottom: 16,
@@ -66,9 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     fontSize: 15,
     fontWeight: "500",
-    color: "#222",
     borderWidth: 1,
-    borderColor: "#C9D3DB",
-    borderStyle: "solid",
+    
   },
 });
