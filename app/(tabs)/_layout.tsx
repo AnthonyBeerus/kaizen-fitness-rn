@@ -6,6 +6,9 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Animated } from 'react-native';
 import ThemedHeader from '@/components/ThemedHeader';
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Ionicons } from '@expo/vector-icons';
+import { ThemedTabBar } from '@/components/navigation/ThemedTabBar';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -13,6 +16,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      tabBar={props => <ThemedTabBar {...props} />}
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         header: ({ options }) => (
@@ -42,8 +46,9 @@ export default function TabLayout() {
         options={{
           title: "Explore",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
+            <Ionicons
+              name={focused ? "compass" : "compass-outline"}
+              size={30}
               color={color}
             />
           ),
@@ -52,7 +57,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="stats"
         options={{
-          title: "stats",
+          title: "Stats",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "pie-chart" : "pie-chart-outline"}
