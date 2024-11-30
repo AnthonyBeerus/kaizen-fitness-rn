@@ -15,7 +15,6 @@ const ThemedSearchbar: React.FC<ThemedSeacrhbarProps> = ({
   lightColor,
   darkColor,
 }) => {
-  const navigation = useNavigation();
 
   const iconColor = useThemeColor(
     { light: lightColor, dark: darkColor },
