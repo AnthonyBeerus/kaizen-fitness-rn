@@ -10,7 +10,7 @@ import { Colors } from "@/constants/Colors";
 import { ThemedMainContainer } from "@/components/containers/ThemedMainContainerx";
 import { FlashList } from "@shopify/flash-list";
 import { useRef } from "react";
-import { Searchbar, SegmentedButtons } from "react-native-paper";
+import { Button, Searchbar, SegmentedButtons } from "react-native-paper";
 import ThemedSearchbar from "@/components/ThemedSearchbar";
 import React from "react";
 
@@ -37,13 +37,19 @@ export default function HomeScreen() {
         lightColor={Colors.light.icon} // Pass light theme icon color
         darkColor={Colors.dark.icon} // Pass dark theme icon color
       />
-      <ThemedView variant={"default"}
-        style={{ flexDirection: "row",  }}
-      > 
+      <ThemedView
+        variant={"default"}
+        style={{
+          flexDirection: "row",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+        }}>
         <ThemedText>Programs</ThemedText>
-        
+        <Button mode="text" style={{ borderRadius: 10 }}>
+          View All
+        </Button>
       </ThemedView>
-      
+
       <FlashList
         data={DATA}
         renderItem={({ item }) => (
