@@ -6,6 +6,7 @@ import { ThemedText } from "../ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Ionicons } from "@expo/vector-icons";
 import ThemedTabBarButton from "./ThemedTabBarButton";
+import ThemedFAB from "../ThemedFAB";
 
 export function ThemedTabBar({
   state,
@@ -17,53 +18,59 @@ export function ThemedTabBar({
   const { colors } = useTheme();
   const textColor = useThemeColor({ light: "#11181C", dark: "#ECEDEE" }, "text");
   return (
-    <View style={styles.tabBar}>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          typeof options.tabBarLabel === "function"
-            ? options.tabBarLabel({
-                focused: state.index === index,
-                color: colors.text,
-                position: "below-icon",
-                children: route.name,
-              })
-            : options.tabBarLabel ?? options.title ?? route.name;
+    <View>
+      <View style={styles.tabBar}>
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
+          const label =
+            typeof options.tabBarLabel === "function"
+              ? options.tabBarLabel({
+                  focused: state.index === index,
+                  color: colors.text,
+                  position: "below-icon",
+                  children: route.name,
+                })
+              : options.tabBarLabel ?? options.title ?? route.name;
 
-        const isFocused = state.index === index;
+          const isFocused = state.index === index;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key,
-            canPreventDefault: true,
-          });
+          const onPress = () => {
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true,
+            });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name, route.params);
-          }
-        };
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name, route.params);
+            }
+          };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: "tabLongPress",
-            target: route.key,
-          });
-        };
+          const onLongPress = () => {
+            navigation.emit({
+              type: "tabLongPress",
+              target: route.key,
+            });
+          };
 
-        return (
-          <ThemedTabBarButton
-            key={route.name}
-            onPress={onPress}
-            routeName={route.name as "index" | "explore" | "Stats" | "Profile"}
-            onLongPress={onLongPress}
-            isFocused={isFocused}
-            color={isFocused ? "white" : textColor}
-            label={String(label)} lightColor={""} darkColor={""}          
-          />
-
-        );
-      })}
+          return (
+            <ThemedTabBarButton
+              key={route.name}
+              onPress={onPress}
+              routeName={
+                route.name as "index" | "explore" | "Stats" | "Profile"
+              }
+              onLongPress={onLongPress}
+              isFocused={isFocused}
+              color={isFocused ? "white" : textColor}
+              label={String(label)}
+              lightColor={""}
+              darkColor={""}
+            />
+          );
+        })}
+      </View>
+      <ThemedFAB/>
     </View>
   );
 }
@@ -78,7 +85,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     backgroundColor: "#F04444",
     paddingVertical: 0,
-    borderRadius: 10,
+    borderRadius: 6,
   },
 });
 
