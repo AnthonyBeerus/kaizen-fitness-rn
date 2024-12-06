@@ -13,6 +13,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  withTiming,
 } from "react-native-reanimated";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
@@ -47,21 +48,11 @@ const ThemedTabBarButton = ({
   const scale = useSharedValue(0);
 
   useEffect(() => {
-    scale.value = withSpring(
-      typeof isFocused === "boolean" ? (isFocused ? 1 : 0) : isFocused,
-      {
-        duration: 10,
-        dampingRatio: 1,
-        stiffness: 100,
-        overshootClamping: false,
-        restDisplacementThreshold: 150,
-        restSpeedThreshold: 150,
-      }
-    );
+    scale.value = withTiming(isFocused ? 1 : 0, { duration: 100 });
   }, [scale, isFocused]);
 
   const animatedIconStyle = useAnimatedStyle(() => {
-    const scaleValue = interpolate(scale.value, [0, 1], [1, 1.5]);
+    const scaleValue = interpolate(scale.value, [0, 1], [1, 1.6]);
     const top = interpolate(scale.value, [0, 1], [0, 9]);
     return {
       transform: [{ scale: scaleValue }],
