@@ -13,6 +13,7 @@ import { useRef } from "react";
 import { Button, Searchbar, SegmentedButtons } from "react-native-paper";
 import ThemedSearchbar from "@/components/ThemedSearchbar";
 import React from "react";
+import ThemedButton from "@/components/ThemedButton";
 
 
 const DATA = [
@@ -28,14 +29,25 @@ export default function HomeScreen() {
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       variant="headerImage">
       <ThemedSearchbar />
+      <ThemedText>Today's Workout</ThemedText>
       <TwoColumnLayout
-        verticalContainerContent={<ThemedText>ROOBA</ThemedText>}
+        verticalContainerContent={<ThemedText>Steps</ThemedText>}
+        iconVertical={"barbell"}
         horizontalContainerContents={[
           <ThemedText>ZOOBA</ThemedText>,
           <ThemedText>GOOBA</ThemedText>,
         ]}
+        iconHorizontalTop={"link"}
+        iconHorizontalBottom={"link"}
         lightColor={Colors.light.icon} // Pass light theme icon color
         darkColor={Colors.dark.icon} // Pass dark theme icon color
+      />
+      <ThemedButton
+        variant="primary"
+        title="Start"
+        onPress={() => {
+          console.log("Start");
+        }}
       />
       <ThemedView
         variant={"default"}

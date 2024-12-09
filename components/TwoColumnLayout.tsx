@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 import { ThemedView } from "./ThemedView";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,83 +9,92 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { Colors } from "@/constants/Colors";
 import { ThemedText } from "./ThemedText";
 
+// Dynamically constrain to valid Ionicon names
+type IoniconName = keyof typeof Ionicons.glyphMap;
+
 type TwoColumnLayoutProps = {
-    verticalContainerContent: React.ReactNode;
-    horizontalContainerContents: [React.ReactNode, React.ReactNode]; // Array with two horizontal contents
-    lightColor?: string;
-    darkColor?: string;
+  verticalContainerContent: React.ReactNode;
+  horizontalContainerContents: [React.ReactNode, React.ReactNode];
+  lightColor?: string;
+  darkColor?: string;
+  iconVertical: IoniconName;
+  iconHorizontalTop: IoniconName;
+  iconHorizontalBottom: IoniconName;
 };
 
 export const TwoColumnLayout: React.FC<TwoColumnLayoutProps> = ({
-    verticalContainerContent,
-    horizontalContainerContents,
-    lightColor,
-    darkColor,
-    }) => {
-    const iconColor = useThemeColor(
-        { light: Colors.light.brandColoricon, dark: Colors.dark.brandColoricon },
-        "icon"
-    );
+  verticalContainerContent,
+  horizontalContainerContents,
+  lightColor,
+  darkColor,
+  iconVertical,
+  iconHorizontalTop,
+  iconHorizontalBottom,
+}) => {
+  const iconColor = useThemeColor(
+    { light: Colors.light.brandColoricon, dark: Colors.dark.brandColoricon },
+    "icon"
+  );
 
-    return (
-        <ThemedView
-          variant="default" 
-          style={styles.twoColumnLayout}>
-        {/* Left Column: ThemedVerticalContainer */}
-        <ThemedVerticalContainer 
-          variant="default"
-          style={styles.verticalContainer}>
-            <View
-            style={[styles.contentContainer, styles.verticalContentContainer]}>
-            <Ionicons name="fitness" size={34} color={iconColor} />
-            <View style={styles.textContainer}>
-                {typeof verticalContainerContent === "string" ? (
-                <ThemedText>{verticalContainerContent}</ThemedText>
-                ) : (
-                verticalContainerContent
-                )}
-            </View>
-            </View>
-        </ThemedVerticalContainer>
-
-        {/* Right Column: ThemedHorizontalContainers */}
-        <View style={styles.rightColumn}>
-            <ThemedHorizontalContainer variant="default" style={styles.horizontalContainer}>
-            <View
-                style={[
-                styles.contentContainer,
-                styles.horizontalContentContainer,
-                ]}>
-                <Ionicons name="bicycle" size={34} color={iconColor} />
-                <View style={styles.textContainer}>
-                {typeof horizontalContainerContents[0] === "string" ? (
-                    <Text>{horizontalContainerContents[0]}</Text>
-                ) : (
-                    horizontalContainerContents[0]
-                )}
-                </View>
-            </View>
-            </ThemedHorizontalContainer>
-
-            <ThemedHorizontalContainer variant="default" style={styles.horizontalContainer}>
-            <View
-                style={[
-                styles.contentContainer,
-                styles.horizontalContentContainer,
-                ]}>
-                <Ionicons name="walk" size={34} color={iconColor} />
-                <View style={styles.textContainer}>
-                {typeof horizontalContainerContents[1] === "string" ? (
-                    <Text>{horizontalContainerContents[1]}</Text>
-                ) : (
-                    horizontalContainerContents[1]
-                )}
-                </View>
-            </View>
-            </ThemedHorizontalContainer>
+  return (
+    <ThemedView variant="default" style={styles.twoColumnLayout}>
+      <ThemedVerticalContainer
+        variant="default"
+        style={styles.verticalContainer}>
+        <View
+          style={[styles.contentContainer, styles.verticalContentContainer]}>
+          <Ionicons name={iconVertical} size={34} color={iconColor} />
+          <View style={styles.textContainer}>
+            {typeof verticalContainerContent === "string" ? (
+              <ThemedText>{verticalContainerContent}</ThemedText>
+            ) : (
+              verticalContainerContent
+            )}
+          </View>
         </View>
-        </ThemedView>
-    );
+      </ThemedVerticalContainer>
+
+      <View style={styles.rightColumn}>
+        <ThemedHorizontalContainer
+          variant="default"
+          style={styles.horizontalContainer}>
+          <View
+            style={[
+              styles.contentContainer,
+              styles.horizontalContentContainer,
+            ]}>
+            <Ionicons name={iconHorizontalTop} size={34} color={iconColor} />
+            <View style={styles.textContainer}>
+              {typeof horizontalContainerContents[0] === "string" ? (
+                <Text>{horizontalContainerContents[0]}</Text>
+              ) : (
+                horizontalContainerContents[0]
+              )}
+            </View>
+          </View>
+        </ThemedHorizontalContainer>
+
+        <ThemedHorizontalContainer
+          variant="default"
+          style={styles.horizontalContainer}>
+          <View
+            style={[
+              styles.contentContainer,
+              styles.horizontalContentContainer,
+            ]}>
+            <Ionicons name={iconHorizontalBottom} size={34} color={iconColor} />
+            <View style={styles.textContainer}>
+              {typeof horizontalContainerContents[1] === "string" ? (
+                <Text>{horizontalContainerContents[1]}</Text>
+              ) : (
+                horizontalContainerContents[1]
+              )}
+            </View>
+          </View>
+        </ThemedHorizontalContainer>
+      </View>
+    </ThemedView>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -124,6 +133,6 @@ const styles = StyleSheet.create({
   textContainer: {
     marginLeft: 8,
     marginTop: 4,
-    alignContent: "stretch"// Optional: Adds spacing between icon and text for vertical layout
+    alignContent: "stretch", // Optional: Adds spacing between icon and text for vertical layout
   },
 });
