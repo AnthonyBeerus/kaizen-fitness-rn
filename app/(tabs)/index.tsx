@@ -65,9 +65,33 @@ export default function HomeScreen() {
       <FlashList
         data={DATA}
         renderItem={({ item }) => (
-          <ThemedMainContainer variant="default">
+          <ThemedMainContainer 
+            style={{
+              flex: 1,
+              justifyContent: "space-between",
+            }}
+            variant="default"
+            >
             <ThemedView variant="inContainer">
-              <ThemedText>{item.title}</ThemedText>
+              <ThemedView 
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+                variant={"inContainer"}>
+                <ThemedText>Day 1</ThemedText>
+                <ThemedText>10:00 AM
+                </ThemedText>
+              </ThemedView>
+              <ThemedView
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+                variant={"inContainer"}>
+                <ThemedText>{item.title}</ThemedText>
+                <ThemedButton title={"Start"} onPress={() => {}} />
+              </ThemedView>
             </ThemedView>
           </ThemedMainContainer>
         )}
