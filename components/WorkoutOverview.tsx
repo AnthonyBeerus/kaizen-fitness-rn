@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 10,
-    height: 200,
+    height: 220,
   },
   verticalContainer: {
     flex: 1,
