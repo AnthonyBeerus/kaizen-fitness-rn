@@ -29,53 +29,28 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Gym",
           header: ({ options }) => (
             <ThemedHeader title={options.title ?? "Default Title"} />
-          ),
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
           ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: "Explore",
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "compass" : "compass-outline"}
-              size={30}
-              color={color}
-            />
-          ),
+          title: "Nutrition",
         }}
       />
       <Tabs.Screen
         name="stats"
         options={{
-          title: "Stats",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "pie-chart" : "pie-chart-outline"}
-              color={color}
-            />
-          ),
+          title: "Wellness Hub",
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "person" : "person-outline"}
-              color={color}
-            />
-          ),
         }}
       />
     </Tabs>
