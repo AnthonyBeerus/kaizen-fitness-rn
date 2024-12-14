@@ -1,4 +1,11 @@
-import { Image, StyleSheet, Platform, FlatList, View, Animated } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Platform,
+  FlatList,
+  View,
+  Animated,
+} from "react-native";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -10,13 +17,17 @@ import { Colors } from "@/constants/Colors";
 import { ThemedMainContainer } from "@/components/containers/ThemedMainContainerx";
 import { FlashList } from "@shopify/flash-list";
 import { useRef, useState } from "react";
-import { Button, Searchbar, SegmentedButtons } from "react-native-paper";
+import {
+  Button,
+  IconButton,
+  Searchbar,
+  SegmentedButtons,
+} from "react-native-paper";
 import ThemedSearchbar from "@/components/ThemedSearchbar";
 import React from "react";
 import ThemedButton from "@/components/ThemedButton";
 import { WorkoutOverview } from "@/components/WorkoutOverview";
 import Calendar from "@/components/Calender";
-
 
 const DATA = [
   { id: "1", title: "Item 1" },
@@ -36,17 +47,23 @@ export default function HomeScreen() {
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       variant="headerImage">
       {/* <ThemedSearchbar /> */}
-      <Calendar onSelectDate={(date: string) => setSelectedDate2(date)} selected={selectedDate || ''} />
+      <Calendar
+        onSelectDate={(date: string) => setSelectedDate2(date)}
+        selected={selectedDate || ""}
+      />
       <ThemedView
         variant={"default"}
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
         }}>
-        <ThemedText style={{padding:10}}>Today's Workout</ThemedText>
-        <Button mode="text" style={{ borderRadius: 10,}}>
-          View Details
-        </Button>
+        <ThemedText style={{ padding: 10 }}>Today's Workout</ThemedText>
+        <IconButton
+          icon="dots-horizontal"
+          iconColor={Colors.light.icon}
+          style={{ borderRadius: 10 }}
+          onPress={() => console.log("Pressed")}
+        />
       </ThemedView>
       <WorkoutOverview
         verticalContainerContent={<ThemedText>Steps</ThemedText>}
