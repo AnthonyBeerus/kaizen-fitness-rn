@@ -9,11 +9,13 @@ import { TwoColumnLayout } from "@/components/TwoColumnLayout";
 import { Colors } from "@/constants/Colors";
 import { ThemedMainContainer } from "@/components/containers/ThemedMainContainerx";
 import { FlashList } from "@shopify/flash-list";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Button, Searchbar, SegmentedButtons } from "react-native-paper";
 import ThemedSearchbar from "@/components/ThemedSearchbar";
 import React from "react";
 import ThemedButton from "@/components/ThemedButton";
+import { WorkoutOverview } from "@/components/WorkoutOverview";
+import Calendar from "@/components/Calender";
 
 
 const DATA = [
@@ -24,13 +26,29 @@ const DATA = [
 
 export default function HomeScreen() {
   const [value, setValue] = React.useState("");
+  function setSelectedDate(date: Date): void {
+    throw new Error("Function not implemented.");
+  }
+  const [selectedDate, setSelectedDate2] = useState<string | null>(null);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       variant="headerImage">
-      <ThemedSearchbar />
-      <ThemedText>Today's Workout</ThemedText>
-      <TwoColumnLayout
+      {/* <ThemedSearchbar /> */}
+      <Calendar onSelectDate={(date: string) => setSelectedDate2(date)} selected={selectedDate || ''} />
+      <ThemedView
+        variant={"default"}
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}>
+        <ThemedText style={{padding:10}}>Today's Workout</ThemedText>
+        <Button mode="text" style={{ borderRadius: 10,}}>
+          View Details
+        </Button>
+      </ThemedView>
+      <WorkoutOverview
         verticalContainerContent={<ThemedText>Steps</ThemedText>}
         iconVertical={"barbell"}
         horizontalContainerContents={[
@@ -42,13 +60,13 @@ export default function HomeScreen() {
         lightColor={Colors.light.icon} // Pass light theme icon color
         darkColor={Colors.dark.icon} // Pass dark theme icon color
       />
-      <ThemedButton
+      {/* <ThemedButton
         variant="primary"
         title="Start"
         onPress={() => {
           console.log("Start");
         }}
-      />
+      /> */}
       <ThemedView
         variant={"default"}
         style={{
@@ -61,39 +79,15 @@ export default function HomeScreen() {
           View All
         </Button>
       </ThemedView>
-
       <FlashList
         data={DATA}
         renderItem={({ item }) => (
-          <ThemedMainContainer 
+          <ThemedMainContainer
             style={{
               flex: 1,
               justifyContent: "space-between",
             }}
-            variant="default"
-            >
-            <ThemedView variant="inContainer">
-              <ThemedView 
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-                variant={"inContainer"}>
-                <ThemedText>Day 1</ThemedText>
-                <ThemedText>10:00 AM
-                </ThemedText>
-              </ThemedView>
-              <ThemedView
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-                variant={"inContainer"}>
-                <ThemedText>{item.title}</ThemedText>
-                <ThemedButton title={"Start"} onPress={() => {}} />
-              </ThemedView>
-            </ThemedView>
-          </ThemedMainContainer>
+            variant="default"></ThemedMainContainer>
         )}
         estimatedItemSize={100}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
