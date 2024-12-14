@@ -20,7 +20,7 @@ export enum PageTabs {
   Profile,
 }
 
-export default function StatsScreen() {
+export default function MentalHealthScreen() {
 
   const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(PageTabs.Stats);
 
