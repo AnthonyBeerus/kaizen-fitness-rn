@@ -15,16 +15,16 @@ const DATA = [
 ];
 
 export enum PageTabs {
-  Stats,
-  insights,
-  Profile,
+  Mood,
+  Stress,
+  Mindfulness,
 }
 
 export default function MentalHealthScreen() {
 
-  const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(PageTabs.Stats);
+  const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(PageTabs.Mood);
 
-  const pageTabbuttons: PageTabButtonType[] = [{title: "Stats"},{title:"Insights"}, {title: "Profile"}];
+  const pageTabbuttons: PageTabButtonType[] = [{title: "Mood"},{title:"Journal"}, {title: "Mindfullness"}];
 
   return (
     <>
@@ -39,28 +39,13 @@ export default function MentalHealthScreen() {
           setSelectedPageTab={setSelectedPageTab}
         />
         <ThemedView variant={"default"}>
-          {selectedPageTab === PageTabs.Stats && (
-            <FlashList
-              data={DATA}
-              renderItem={({ item }) => (
-                <Link asChild href="../stats/stats">
-                  <Pressable onPress={() => console.log(item.title)}>
-                    <ThemedMainContainer variant={"default"}>
-                      <ThemedView variant={"inContainer"}>
-                        <ThemedText>{item.title}</ThemedText>
-                      </ThemedView>
-                    </ThemedMainContainer>
-                  </Pressable>
-                </Link>
-              )}
-              estimatedItemSize={10}
-              ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-            />
+          {selectedPageTab === PageTabs.Mood && (
+            <ThemedText>Mood</ThemedText>
           )}
-          {selectedPageTab === PageTabs.insights && (
-            <ThemedText>Insights</ThemedText>
+          {selectedPageTab === PageTabs.Stress && (
+            <ThemedText>Journal</ThemedText>
           )}
-          {selectedPageTab === PageTabs.Profile && (
+          {selectedPageTab === PageTabs.Mindfulness && (
             <ThemedText>Profile</ThemedText>
           )}
         </ThemedView>

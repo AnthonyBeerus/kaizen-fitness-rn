@@ -28,12 +28,19 @@ import React from "react";
 import ThemedButton from "@/components/ThemedButton";
 import { WorkoutOverview } from "@/components/WorkoutOverview";
 import Calendar from "@/components/Calender";
+import PageTabbutton, { PageTabButtonType } from "@/components/navigation/PageTabbutton";
 
 const DATA = [
   { id: "1", title: "Item 1" },
   { id: "2", title: "Item 2" },
   { id: "3", title: "Item 3" },
 ];
+
+export enum PageTabs {
+  Plans,
+  Progress,
+  Log,
+}
 
 export default function HomeScreen() {
   const [value, setValue] = React.useState("");
@@ -42,74 +49,105 @@ export default function HomeScreen() {
   }
   const [selectedDate, setSelectedDate2] = useState<string | null>(null);
 
+  const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(
+    PageTabs.Plans
+  );
+  
+    const pageTabbuttons: PageTabButtonType[] = [{title: "Plans"},{title:"Progress"}, {title: "Log"}];
+  
+  
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      variant="headerImage">
-      {/* <ThemedSearchbar /> */}
-      <Calendar
-        onSelectDate={(date: string) => setSelectedDate2(date)}
-        selected={selectedDate || ""}
-      />
-      <ThemedView
-        variant={"default"}
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}>
-        <ThemedText style={{ padding: 10 }}>Today's Workout</ThemedText>
-        <IconButton
-          icon="dots-horizontal"
-          iconColor={Colors.light.icon}
-          style={{ borderRadius: 10 }}
-          onPress={() => console.log("Pressed")}
+    <>
+      <ParallaxScrollView
+        headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
+        variant="headerImage">
+        {/* <ThemedSearchbar /> */}
+        <PageTabbutton
+          pageTabbuttons={pageTabbuttons}
+          selectedPageTab={selectedPageTab}
+          setSelectedPageTab={setSelectedPageTab}
         />
-      </ThemedView>
-      <WorkoutOverview
-        verticalContainerContent={<ThemedText>Steps</ThemedText>}
-        iconVertical={"barbell"}
-        horizontalContainerContents={[
-          <ThemedText>ZOOBA</ThemedText>,
-          <ThemedText>GOOBA</ThemedText>,
-        ]}
-        iconHorizontalTop={"link"}
-        iconHorizontalBottom={"link"}
-        lightColor={Colors.light.icon} // Pass light theme icon color
-        darkColor={Colors.dark.icon} // Pass dark theme icon color
-      />
-      {/* <ThemedButton
+        <ThemedView variant={"default"}>
+          {selectedPageTab === PageTabs.Plans && (
+            <ThemedView variant={"default"}>
+              <ThemedView
+                variant={"default"}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}>
+                <ThemedText style={{ padding: 10 }}>Today's Workout</ThemedText>
+                <Button mode="text" style={{ borderRadius: 10 }}>
+                  View Details
+                </Button>
+              </ThemedView>
+              <WorkoutOverview
+                verticalContainerContent={<ThemedText>Strength</ThemedText>}
+                iconVertical={"barbell"}
+                horizontalContainerContents={[
+                  <ThemedText>ZOOBA</ThemedText>,
+                  <ThemedText>GOOBA</ThemedText>,
+                ]}
+                iconHorizontalTop={"link"}
+                iconHorizontalBottom={"link"}
+                lightColor={Colors.light.icon} // Pass light theme icon color
+                darkColor={Colors.dark.icon} // Pass dark theme icon color
+              />
+              <ThemedButton
+                title={"Start Workout"}
+                onPress={() => console.log("Start")}
+              />
+              <ThemedView
+                variant={"default"}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                  paddingVertical: 10,
+                }}>
+                <ThemedText>Programs</ThemedText>
+                <Button mode="text" style={{ borderRadius: 10 }}>
+                  View All
+                </Button>
+              </ThemedView>
+              <FlashList
+                data={DATA}
+                renderItem={({}) => (
+                  <ThemedMainContainer
+                    style={{
+                      flex: 1,
+                      justifyContent: "space-between",
+                    }}
+                    variant="default"></ThemedMainContainer>
+                )}
+                estimatedItemSize={100}
+                ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+              />
+            </ThemedView>
+          )}
+          {selectedPageTab === PageTabs.Progress && (
+            <ThemedText>Progress</ThemedText>
+          )}
+          {selectedPageTab === PageTabs.Log && (
+            <ThemedView variant={"default"}>
+              <Calendar
+                onSelectDate={(date: string) => setSelectedDate2(date)}
+                selected={selectedDate || ""}
+              />
+            </ThemedView>
+          )}
+        </ThemedView>
+
+        {/* <ThemedButton
         variant="primary"
         title="Start"
         onPress={() => {
           console.log("Start");
         }}
       /> */}
-      <ThemedView
-        variant={"default"}
-        style={{
-          flexDirection: "row",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-        }}>
-        <ThemedText>Programs</ThemedText>
-        <Button mode="text" style={{ borderRadius: 10 }}>
-          View All
-        </Button>
-      </ThemedView>
-      <FlashList
-        data={DATA}
-        renderItem={({ item }) => (
-          <ThemedMainContainer
-            style={{
-              flex: 1,
-              justifyContent: "space-between",
-            }}
-            variant="default"></ThemedMainContainer>
-        )}
-        estimatedItemSize={100}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-      />
-    </ParallaxScrollView>
+      </ParallaxScrollView>
+    </>
   );
 }
 
