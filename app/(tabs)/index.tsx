@@ -20,6 +20,7 @@ import { useRef, useState } from "react";
 import {
   Button,
   IconButton,
+  PaperProvider,
   Searchbar,
   SegmentedButtons,
 } from "react-native-paper";
@@ -29,6 +30,7 @@ import ThemedButton from "@/components/ThemedButton";
 import { WorkoutOverview } from "@/components/WorkoutOverview";
 import Calendar from "@/components/Calender";
 import PageTabbutton, { PageTabButtonType } from "@/components/navigation/PageTabbutton";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 const DATA = [
   { id: "1", title: "Item 1" },
@@ -36,11 +38,19 @@ const DATA = [
   { id: "3", title: "Item 3" },
 ];
 
+const PROGRAMNS = [
+  { id: "1", title: "Program 1" },
+  { id: "2", title: "Program 2" },
+  { id: "3", title: "Program 3" },
+];
+
 export enum PageTabs {
   Plans,
   Progress,
   Log,
-}
+};
+
+
 
 export default function HomeScreen() {
   const [value, setValue] = React.useState("");
@@ -55,7 +65,14 @@ export default function HomeScreen() {
   
     const pageTabbuttons: PageTabButtonType[] = [{title: "Plans"},{title:"Progress"}, {title: "Log"}];
   
-  
+  const containerColor = useThemeColor(
+    { light: Colors.light.containerBackground, dark: Colors.dark.containerBackground },
+    "containerBackground"
+  )
+  const iconColor = useThemeColor(
+    { light: Colors.light.brandColor, dark: Colors.dark.brandColor },
+    "brandColor"
+  );
 
   return (
     <>
@@ -78,26 +95,21 @@ export default function HomeScreen() {
                   justifyContent: "space-between",
                 }}>
                 <ThemedText style={{ padding: 10 }}>Today's Workout</ThemedText>
-                <Button mode="text" style={{ borderRadius: 10 }}>
-                  View Details
-                </Button>
               </ThemedView>
-              <WorkoutOverview
-                verticalContainerContent={<ThemedText>Strength</ThemedText>}
-                iconVertical={"barbell"}
-                horizontalContainerContents={[
-                  <ThemedText>ZOOBA</ThemedText>,
-                  <ThemedText>GOOBA</ThemedText>,
-                ]}
-                iconHorizontalTop={"link"}
-                iconHorizontalBottom={"link"}
-                lightColor={Colors.light.icon} // Pass light theme icon color
-                darkColor={Colors.dark.icon} // Pass dark theme icon color
-              />
-              <ThemedButton
-                title={"Start Workout"}
-                onPress={() => console.log("Start")}
-              />
+                <WorkoutOverview
+                  verticalContainerContent={<ThemedText>Strength</ThemedText>}
+                  iconVertical={"barbell"}
+                  horizontalContainerContents={[
+                    <ThemedText>ZOOBA</ThemedText>,
+                    <ThemedText>GOOBA</ThemedText>,
+                  ]}
+                  iconHorizontalTop={"link"}
+                  iconHorizontalBottom={"link"}
+                  lightColor={Colors.light.icon} // Pass light theme icon color
+                  darkColor={Colors.dark.icon} // Pass dark theme icon color
+                />
+              
+
               <ThemedView
                 variant={"default"}
                 style={{
@@ -111,6 +123,7 @@ export default function HomeScreen() {
                   View All
                 </Button>
               </ThemedView>
+
               <FlashList
                 data={DATA}
                 renderItem={({}) => (

@@ -12,6 +12,8 @@ import { FlashList } from "@shopify/flash-list";
 import { ThemedMainContainer } from "./containers/ThemedMainContainerx";
 import ThemedButton from "./ThemedButton";
 import { color } from "d3";
+import { Button, IconButton, PaperProvider } from "react-native-paper";
+import { Play, Edit } from "iconsax-react-native";
 
 // Dynamically constrain to valid Ionicon names
 type IoniconName = keyof typeof Ionicons.glyphMap;
@@ -19,7 +21,7 @@ type IoniconName = keyof typeof Ionicons.glyphMap;
 const DATA = [
   { id: "1", 
     title: "Chest Press", 
-    subTitle: "Chest, Triceps", 
+    subTitle: "Chest Triceps", 
     set_reps: "3x8" 
   },
   {
@@ -60,83 +62,119 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
     "fadedText"
   )
 
+  const containerColor = useThemeColor(
+      { light: Colors.light.containerBackground, dark: Colors.dark.containerBackground },
+      "containerBackground"
+    )
+
+  const brandColor = useThemeColor(
+    { light: Colors.light.brandColor, dark: Colors.dark.brandColor },
+    "brandColor"
+  )
+
   return (
-    <ThemedView variant="default" style={styles.workoutOverview}>
-      <ThemedVerticalContainer
-        variant="default"
-        style={styles.verticalContainer}>
-        <View
-          style={[styles.contentContainer, styles.verticalContentContainer]}>
-          <Ionicons name={iconVertical} size={34} color={iconColor} />
-          <View style={styles.textContainer}>
-            {typeof verticalContainerContent === "string" ? (
-              <ThemedText>{verticalContainerContent}</ThemedText>
-            ) : (
-              verticalContainerContent
-            )}
+    <ThemedView variant={"default"} style={{ gap: 0, paddingVertical: 10 }}>
+      <ThemedView variant="default" style={styles.workoutOverview}>
+        <ThemedVerticalContainer
+          variant="default"
+          style={styles.verticalContainer}>
+          <View
+            style={[styles.contentContainer, styles.verticalContentContainer]}>
+            <Ionicons name={iconVertical} size={34} color={iconColor} />
+            <View style={styles.textContainer}>
+              {typeof verticalContainerContent === "string" ? (
+                <ThemedText>{verticalContainerContent}</ThemedText>
+              ) : (
+                verticalContainerContent
+              )}
+            </View>
           </View>
-        </View>
-      </ThemedVerticalContainer>
-
-      <View style={styles.rightColumn}>
-        <FlashList
-          data={DATA}
-          renderItem={({ item }) => (
-            <ThemedHorizontalContainer
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-              variant={"inContainer"}>
-              <ThemedView
-                variant={"transparent"}
-                style={[
-                  styles.pillContainer,
-                  { backgroundColor: pillContainerColor },
-                ]}></ThemedView>
-
-              <ThemedView variant={"transparent"} style={{ flex: 10, }}>
-                <ThemedText
-                  type="smallTitle"
-                  style={{
-                    paddingTop: 20,
-                    paddingLeft: 20,
-                    justifyContent: "space-between",
-                  }}>
-                  {item.title}
-                </ThemedText>
+        </ThemedVerticalContainer>
+        <View style={styles.rightColumn}>
+          <FlashList
+            data={DATA}
+            renderItem={({ item }) => (
+              <ThemedHorizontalContainer
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+                variant={"inContainer"}>
                 <ThemedView
                   variant={"transparent"}
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}>
+                  style={[
+                    styles.pillContainer,
+                    { backgroundColor: pillContainerColor },
+                  ]}></ThemedView>
+
+                <ThemedView variant={"transparent"} style={{ flex: 10 }}>
                   <ThemedText
-                    type="smallSubtitle"
+                    type="smallTitle"
                     style={{
-                      paddingTop: 10,
-                      paddingBottom: 20,
+                      paddingTop: 20,
                       paddingLeft: 20,
                       justifyContent: "space-between",
                     }}>
-                    {item.subTitle}
+                    {item.title}
                   </ThemedText>
+                  <ThemedView
+                    variant={"transparent"}
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}>
+                    <ThemedText
+                      type="smallSubtitle"
+                      style={{
+                        paddingTop: 10,
+                        paddingBottom: 20,
+                        paddingLeft: 20,
+                        justifyContent: "space-between",
+                      }}>
+                      {item.subTitle}
+                    </ThemedText>
+                  </ThemedView>
                 </ThemedView>
-              </ThemedView>
-              <ThemedView
-                variant={"transparent"}
-                style={[
-                  styles.sets_repsContainer,
-                  
-                ]}>
+                <ThemedView
+                  variant={"transparent"}
+                  style={[styles.sets_repsContainer]}>
                   <ThemedText type="smallTitle">{item.set_reps}</ThemedText>
-              </ThemedView>
-            </ThemedHorizontalContainer>
-          )}
-          estimatedItemSize={100}
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-        />
-      </View>
+                </ThemedView>
+              </ThemedHorizontalContainer>
+            )}
+            estimatedItemSize={100}
+            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          />
+        </View>
+      </ThemedView>
+      <PaperProvider
+        settings={{
+          icon: (props) => <Edit {...props} />,
+        }}>
+        <ThemedView variant={"inContainer"} style={styles.viewDetailsSection}>
+          <Button
+            icon={"Edit"}
+            theme={{ colors: { primary: iconColor } }}
+            mode="text"
+            contentStyle={{ flexDirection: "row-reverse" }}
+            style={{
+              borderRadius: 10,
+              justifyContent: "center",
+            }}
+            onPress={() => console.log("View Details")}>
+            <ThemedText style={{ color: brandColor }}>View Details</ThemedText>
+          </Button>
+          <IconButton
+            containerColor={containerColor}
+            mode="contained"
+            iconColor={brandColor}
+            icon={(props) => <Play {...props} />}
+            size={30}
+            style={{ borderRadius: 10, alignContent: "center" }}
+            onPress={() => console.log("Start Workout")}
+          />
+        </ThemedView>
+      </PaperProvider>
     </ThemedView>
   );
 };
@@ -147,6 +185,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 10,
     height: 220,
+  },
+  viewDetailsSection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
   },
   verticalContainer: {
     flex: 1,
@@ -186,8 +229,7 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginTop: 40,
     flex: 3,
-    alignItems: "flex-start"
-
+    alignItems: "flex-start",
   },
   pillContainer: {
     backgroundColor: "red",
