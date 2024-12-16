@@ -57,6 +57,11 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
     "brandColor"
   );
 
+  const brandColorIcon = useThemeColor(
+    { light: Colors.dark.text, dark: Colors.dark.text },
+    "text"
+  );
+
   const pillContainerColor = useThemeColor(
     { light: lightColor, dark: darkColor },
     "fadedText"
@@ -106,7 +111,6 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
                     styles.pillContainer,
                     { backgroundColor: pillContainerColor },
                   ]}></ThemedView>
-
                 <ThemedView variant={"transparent"} style={{ flex: 10 }}>
                   <ThemedText
                     type="smallTitle"
@@ -143,38 +147,23 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
               </ThemedHorizontalContainer>
             )}
             estimatedItemSize={100}
-            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+            ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+          />
+          <IconButton
+            icon={(props) => <Play {...props} />}
+            theme={{ colors: { primary: brandColorIcon } }}
+            mode="contained"
+            style={{
+              borderRadius: 10,
+              margin: 0,
+              width: "100%",
+              backgroundColor: brandColor,
+              gap: 30,
+            }}
+            onPress={() => console.log("Start Workout")}
           />
         </View>
       </ThemedView>
-      <PaperProvider
-        settings={{
-          icon: (props) => <Edit {...props} />,
-        }}>
-        <ThemedView variant={"inContainer"} style={styles.viewDetailsSection}>
-          <Button
-            icon={"Edit"}
-            theme={{ colors: { primary: iconColor } }}
-            mode="text"
-            contentStyle={{ flexDirection: "row-reverse" }}
-            style={{
-              borderRadius: 10,
-              justifyContent: "center",
-            }}
-            onPress={() => console.log("View Details")}>
-            <ThemedText style={{ color: brandColor }}>View Details</ThemedText>
-          </Button>
-          <IconButton
-            containerColor={containerColor}
-            mode="contained"
-            iconColor={brandColor}
-            icon={(props) => <Play {...props} />}
-            size={30}
-            style={{ borderRadius: 10, alignContent: "center" }}
-            onPress={() => console.log("Start Workout")}
-          />
-        </ThemedView>
-      </PaperProvider>
     </ThemedView>
   );
 };
@@ -184,7 +173,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 10,
-    height: 220,
+    height: 260,
   },
   viewDetailsSection: {
     flexDirection: "row",
@@ -193,11 +182,13 @@ const styles = StyleSheet.create({
   },
   verticalContainer: {
     flex: 1,
+    height: 260,
   },
   rightColumn: {
     flex: 2.5,
     justifyContent: "space-between",
     gap: 10,
+    margin: 0,
   },
   horizontalContainer: {
     flex: 1,
