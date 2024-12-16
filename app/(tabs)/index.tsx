@@ -19,6 +19,7 @@ import { FlashList } from "@shopify/flash-list";
 import { useRef, useState } from "react";
 import {
   Button,
+  Card,
   IconButton,
   PaperProvider,
   Searchbar,
@@ -31,6 +32,7 @@ import { WorkoutOverview } from "@/components/WorkoutOverview";
 import Calendar from "@/components/Calender";
 import PageTabbutton, { PageTabButtonType } from "@/components/navigation/PageTabbutton";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { Edit, Folder, Play } from "iconsax-react-native";
 
 const DATA = [
   { id: "1", title: "Item 1" },
@@ -70,12 +72,20 @@ export default function HomeScreen() {
     "containerBackground"
   )
   const iconColor = useThemeColor(
-    { light: Colors.light.brandColor, dark: Colors.dark.brandColor },
-    "brandColor"
+    { light: Colors.light.icon, dark: Colors.dark.icon },
+    "icon"
   );
 
+  const brandColor = useThemeColor(
+      { light: Colors.light.brandColor, dark: Colors.dark.brandColor },
+      "brandColor"
+  )
+
   return (
-    <>
+    <PaperProvider
+      settings={{
+        icon: (props) => <Edit {...props} />,
+      }}>
       <ParallaxScrollView
         headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
         variant="headerImage">
@@ -94,21 +104,34 @@ export default function HomeScreen() {
                   flexDirection: "row",
                   justifyContent: "space-between",
                 }}>
-                <ThemedText style={{ padding: 10 }}>Today's Workout</ThemedText>
+                <ThemedText style={{ paddingVertical: 10 }}>Today's Workout</ThemedText>
+                <Button
+                  icon={"Edit"}
+                  theme={{ colors: { primary: iconColor } }}
+                  mode="text"
+                  contentStyle={{ flexDirection: "row-reverse" }}
+                  style={{
+                    borderRadius: 10,
+                    justifyContent: "center",
+                  }}
+                  onPress={() => console.log("View Details")}>
+                  <ThemedText style={{ color: brandColor }}>
+                    View Details
+                  </ThemedText>
+                </Button>
               </ThemedView>
-                <WorkoutOverview
-                  verticalContainerContent={<ThemedText>Strength</ThemedText>}
-                  iconVertical={"barbell"}
-                  horizontalContainerContents={[
-                    <ThemedText>ZOOBA</ThemedText>,
-                    <ThemedText>GOOBA</ThemedText>,
-                  ]}
-                  iconHorizontalTop={"link"}
-                  iconHorizontalBottom={"link"}
-                  lightColor={Colors.light.icon} // Pass light theme icon color
-                  darkColor={Colors.dark.icon} // Pass dark theme icon color
-                />
-              
+              <WorkoutOverview
+                verticalContainerContent={<ThemedText>Strength</ThemedText>}
+                iconVertical={"barbell"}
+                horizontalContainerContents={[
+                  <ThemedText>ZOOBA</ThemedText>,
+                  <ThemedText>GOOBA</ThemedText>,
+                ]}
+                iconHorizontalTop={"link"}
+                iconHorizontalBottom={"link"}
+                lightColor={Colors.light.icon} // Pass light theme icon color
+                darkColor={Colors.dark.icon} // Pass dark theme icon color
+              />
 
               <ThemedView
                 variant={"default"}
@@ -117,26 +140,45 @@ export default function HomeScreen() {
                   alignItems: "flex-start",
                   justifyContent: "space-between",
                   paddingVertical: 10,
+                  marginTop: 10,
                 }}>
                 <ThemedText>Programs</ThemedText>
                 <Button mode="text" style={{ borderRadius: 10 }}>
                   View All
                 </Button>
               </ThemedView>
-
-              <FlashList
-                data={DATA}
-                renderItem={({}) => (
-                  <ThemedMainContainer
-                    style={{
-                      flex: 1,
-                      justifyContent: "space-between",
-                    }}
-                    variant="default"></ThemedMainContainer>
-                )}
-                estimatedItemSize={100}
-                ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-              />
+              <PaperProvider
+                settings={{
+                  icon: (props) => <Folder {...props} />,
+                }}>
+                <FlashList
+                  data={DATA}
+                  horizontal
+                  renderItem={({}) => (
+                    <Card
+                      style={{
+                        width: 200,
+                        height: 100,
+                        marginRight: 10,
+                        elevation: 5,
+                        borderRadius: 10,
+                        backgroundColor: containerColor,
+                      }}>
+                      <Card.Title
+                        title="Card Title"
+                        subtitle="Card Subtitle"
+                        left={(props) => (
+                          <Folder {...props} color={iconColor} size={30} />
+                        )}
+                      />
+                    </Card>
+                  )}
+                  estimatedItemSize={100}
+                  ItemSeparatorComponent={() => (
+                    <View style={{ height: 100 }} />
+                  )}
+                />
+              </PaperProvider>
             </ThemedView>
           )}
           {selectedPageTab === PageTabs.Progress && (
@@ -151,16 +193,8 @@ export default function HomeScreen() {
             </ThemedView>
           )}
         </ThemedView>
-
-        {/* <ThemedButton
-        variant="primary"
-        title="Start"
-        onPress={() => {
-          console.log("Start");
-        }}
-      /> */}
       </ParallaxScrollView>
-    </>
+    </PaperProvider>
   );
 }
 
