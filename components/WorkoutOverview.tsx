@@ -64,6 +64,14 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
     "brandColor"
   )
 
+  const inverseButtonColor = useThemeColor(
+    {
+      light: Colors.dark.background,
+      dark: Colors.light.background,
+    },
+    "text"
+  );
+
   return (
     <ThemedView variant={"default"} style={{ gap: 0, paddingVertical: 10 }}>
       <ThemedView variant="default" style={styles.workoutOverview}>
@@ -161,18 +169,40 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
             estimatedItemSize={100}
             ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
           />
-          <IconButton
-            icon={(props) => <Play {...props} />}
-            theme={{ colors: { primary: brandColorIcon } }}
-            mode="contained"
+          <ThemedView
+            variant="default"
             style={{
-              borderRadius: 10,
-              margin: 0,
-              width: "100%",
-              backgroundColor: brandColor,
-            }}
-            onPress={() => console.log("Start Workout")}
-          />
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 10,
+            }}>
+            <IconButton
+              icon={(props) => <Play {...props} />}
+              theme={{ colors: { primary: brandColorIcon } }}
+              mode="contained"
+              style={{
+                borderRadius: 10,
+                margin: 0,
+                width: "100%",
+                backgroundColor: brandColor,
+                flex: 3,
+              }}
+              onPress={() => console.log("Start Workout")}
+            />
+            <IconButton
+              icon={(props) => <Ionicons name="sparkles" {...props} />}
+              theme={{ colors: { primary: containerColor } }}
+              mode="contained"
+              style={{
+                borderRadius: 10,
+                margin: 0,
+                width: "100%",
+                backgroundColor: inverseButtonColor,
+                flex: 1,
+              }}
+              onPress={() => console.log("AI insights")}
+            />
+          </ThemedView>
         </View>
       </ThemedView>
     </ThemedView>
@@ -201,6 +231,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 10,
     margin: 0,
+    padding: 0,
   },
   horizontalContainer: {
     flex: 1,
