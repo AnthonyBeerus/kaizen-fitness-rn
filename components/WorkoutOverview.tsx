@@ -12,11 +12,8 @@ import { FlashList } from "@shopify/flash-list";
 import { ThemedMainContainer } from "./containers/ThemedMainContainerx";
 import ThemedButton from "./ThemedButton";
 import { color } from "d3";
-import { Button, IconButton, PaperProvider } from "react-native-paper";
-import { Play, Edit } from "iconsax-react-native";
-
-// Dynamically constrain to valid Ionicon names
-type IoniconName = keyof typeof Ionicons.glyphMap;
+import { Button, Icon, IconButton, PaperProvider } from "react-native-paper";
+import { Play, Edit, EmojiHappy, EmojiNormal, Happyemoji } from "iconsax-react-native";
 
 const DATA = [
   { id: "1", 
@@ -34,23 +31,13 @@ const DATA = [
 
 
 type WorkoutOverviewProps = {
-  verticalContainerContent: React.ReactNode;
-  horizontalContainerContents: [React.ReactNode, React.ReactNode];
   lightColor?: string;
   darkColor?: string;
-  iconVertical: IoniconName;
-  iconHorizontalTop: IoniconName;
-  iconHorizontalBottom: IoniconName;
 };
 
 export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
-  verticalContainerContent,
-  horizontalContainerContents,
   lightColor,
   darkColor,
-  iconVertical,
-  iconHorizontalTop,
-  iconHorizontalBottom,
 }) => {
   const iconColor = useThemeColor(
     { light: lightColor, dark: darkColor},
@@ -83,17 +70,42 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
         <ThemedVerticalContainer
           variant="default"
           style={styles.verticalContainer}>
-          <View
-            style={[styles.contentContainer, styles.verticalContentContainer]}>
-            <Ionicons name={iconVertical} size={34} color={iconColor} />
-            <View style={styles.textContainer}>
-              {typeof verticalContainerContent === "string" ? (
-                <ThemedText>{verticalContainerContent}</ThemedText>
-              ) : (
-                verticalContainerContent
-              )}
-            </View>
-          </View>
+          <ThemedText type="smallSubtitle">Intensity</ThemedText>
+          <ThemedView variant="transparent" style={styles.contentContainer}>
+            <IconButton
+              mode="outlined"
+              icon={(props) => <Ionicons name="snow" {...props} />}
+              theme={{ colors: { primary: brandColorIcon } }}
+              style={{
+                backgroundColor: containerColor,
+                borderRadius: 10,
+                marginBottom: 20,
+              }}
+              onPress={() => console.log("Low Intensity")}
+            />
+            <IconButton
+              mode="outlined"
+              icon={(props) => <Happyemoji {...props} />}
+              theme={{ colors: { primary: brandColorIcon } }}
+              style={{
+                backgroundColor: containerColor,
+                borderRadius: 10,
+                marginBottom: 20,
+              }}
+              onPress={() => console.log("Normal Intensity")}
+            />
+            <IconButton
+              mode="outlined"
+              icon={(props) => <Ionicons name="flame" {...props} />}
+              theme={{ colors: { primary: brandColorIcon } }}
+              style={{
+                backgroundColor: containerColor,
+                borderRadius: 10,
+                marginBottom: 20,
+              }}
+              onPress={() => console.log("High Intensity")}
+            />
+          </ThemedView>
         </ThemedVerticalContainer>
         <View style={styles.rightColumn}>
           <FlashList
@@ -158,7 +170,6 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
               margin: 0,
               width: "100%",
               backgroundColor: brandColor,
-              gap: 30,
             }}
             onPress={() => console.log("Start Workout")}
           />
@@ -183,6 +194,7 @@ const styles = StyleSheet.create({
   verticalContainer: {
     flex: 1,
     height: 260,
+    justifyContent: "space-around",
   },
   rightColumn: {
     flex: 2.5,
@@ -194,9 +206,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    marginBottom:6,
   },
   verticalContentContainer: {
     flexDirection: "column", // Stack icon above text
