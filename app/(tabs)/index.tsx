@@ -121,14 +121,6 @@ export default function HomeScreen() {
                 </Button>
               </ThemedView>
               <WorkoutOverview
-                verticalContainerContent={<ThemedText>Strength</ThemedText>}
-                iconVertical={"barbell"}
-                horizontalContainerContents={[
-                  <ThemedText>ZOOBA</ThemedText>,
-                  <ThemedText>GOOBA</ThemedText>,
-                ]}
-                iconHorizontalTop={"link"}
-                iconHorizontalBottom={"link"}
                 lightColor={Colors.light.icon} // Pass light theme icon color
                 darkColor={Colors.dark.icon} // Pass dark theme icon color
               />
