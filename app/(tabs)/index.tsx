@@ -16,7 +16,7 @@ import { TwoColumnLayout } from "@/components/TwoColumnLayout";
 import { Colors } from "@/constants/Colors";
 import { ThemedMainContainer } from "@/components/containers/ThemedMainContainerx";
 import { FlashList } from "@shopify/flash-list";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Button,
   Card,
@@ -24,6 +24,7 @@ import {
   PaperProvider,
   Searchbar,
   SegmentedButtons,
+  Title,
 } from "react-native-paper";
 import ThemedSearchbar from "@/components/ThemedSearchbar";
 import React from "react";
@@ -32,7 +33,11 @@ import { WorkoutOverview } from "@/components/WorkoutOverview";
 import Calendar from "@/components/Calender";
 import PageTabbutton, { PageTabButtonType } from "@/components/navigation/PageTabbutton";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { Edit, Folder, Play } from "iconsax-react-native";
+import { Edit, Folder, Play, Weight, WeightMeter } from "iconsax-react-native";
+import { useBarChartLogic } from "@/components/Bar Chart/logic/BarChartLogic";
+import BarChartCanvas from "@/components/Bar Chart/BarChartCanvas";
+import AnimatedText from "@/components/Bar Chart/AnimatedText";
+import { useSharedValue } from "react-native-reanimated";
 
 const DATA = [
   { id: "1", title: "Item 1" },
@@ -47,10 +52,11 @@ const PROGRAMNS = [
 ];
 
 export enum PageTabs {
-  Plans,
+  Program,
   Progress,
-  Log,
+  Stats,
 };
+
 
 
 
@@ -62,10 +68,10 @@ export default function HomeScreen() {
   const [selectedDate, setSelectedDate2] = useState<string | null>(null);
 
   const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(
-    PageTabs.Plans
+    PageTabs.Program
   );
   
-    const pageTabbuttons: PageTabButtonType[] = [{title: "Plans"},{title:"Progress"}, {title: "Log"}];
+  const pageTabbuttons: PageTabButtonType[] = [{title: "Program"},{title:"Progress"}, {title: "Stats"}];
   
   const containerColor = useThemeColor(
     { light: Colors.light.containerBackground, dark: Colors.dark.containerBackground },
@@ -80,6 +86,47 @@ export default function HomeScreen() {
       { light: Colors.light.brandColor, dark: Colors.dark.brandColor },
       "brandColor"
   )
+  const inverseButtonColor = useThemeColor(
+          {
+              light: Colors.dark.background,
+              dark: Colors.light.background,
+          },
+          "text"
+          );
+
+  //Bar chart logic
+
+   const data = [
+      { label: "Sun", value: 100 },
+     { label: "Mon", value: 120 },
+     { label: "Tue", value: 150 },
+     { label: "Wed", value: 200 },
+     { label: "Thu", value: 170 },
+     { label: "Fri", value: 90 },
+      { label: "Sat", value: 75 },
+   ];
+
+   const canvasWidth = 400;
+   const canvasHeight = 210;
+   const selectedValue = useSharedValue<number>(0);
+   const {
+     x,
+     y,
+     barWidth,
+     graphHeight,
+     progress,
+     selectedBar,
+     startAnimation,
+   } = useBarChartLogic(data, canvasWidth, canvasHeight);
+
+    useEffect(() => {
+      startAnimation(); // Trigger animation on component mount
+    }, [startAnimation]);
+
+    const touchHandler = (e: any) => {
+      console.log("Canvas touched:", e.nativeEvent);
+    };
+
 
   return (
     <PaperProvider
@@ -96,7 +143,7 @@ export default function HomeScreen() {
           setSelectedPageTab={setSelectedPageTab}
         />
         <ThemedView variant={"default"}>
-          {selectedPageTab === PageTabs.Plans && (
+          {selectedPageTab === PageTabs.Program && (
             <ThemedView variant={"default"}>
               <ThemedView
                 variant={"default"}
@@ -104,7 +151,9 @@ export default function HomeScreen() {
                   flexDirection: "row",
                   justifyContent: "space-between",
                 }}>
-                <ThemedText style={{ paddingVertical: 10 }}>Today's Workout</ThemedText>
+                <ThemedText type={"smallTitle"} style={{ paddingVertical: 10 }}>
+                  Today's Workout
+                </ThemedText>
                 <Button
                   icon={"Edit"}
                   theme={{ colors: { primary: iconColor } }}
@@ -125,62 +174,59 @@ export default function HomeScreen() {
                 darkColor={Colors.dark.icon} // Pass dark theme icon color
               />
 
-              <ThemedView
-                variant={"default"}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "flex-start",
-                  justifyContent: "space-between",
-                  paddingVertical: 10,
-                  marginTop: 10,
-                }}>
-                <ThemedText>Programs</ThemedText>
-                <Button mode="text" style={{ borderRadius: 10 }}>
-                  View All
-                </Button>
-              </ThemedView>
-              <PaperProvider
-                settings={{
-                  icon: (props) => <Folder {...props} />,
-                }}>
-                <FlashList
-                  data={DATA}
-                  horizontal
-                  renderItem={({}) => (
-                    <Card
-                      style={{
-                        width: 200,
-                        height: 100,
-                        marginRight: 10,
-                        elevation: 5,
-                        borderRadius: 10,
-                        backgroundColor: containerColor,
-                      }}>
-                      <Card.Title
-                        title="Card Title"
-                        subtitle="Card Subtitle"
-                        left={(props) => (
-                          <Folder {...props} color={iconColor} size={30} />
-                        )}
-                      />
-                    </Card>
-                  )}
-                  estimatedItemSize={100}
-                  ItemSeparatorComponent={() => (
-                    <View style={{ height: 100 }} />
-                  )}
-                />
-              </PaperProvider>
             </ThemedView>
           )}
           {selectedPageTab === PageTabs.Progress && (
-            <ThemedText>Progress</ThemedText>
+            <ThemedView variant={"default"}>
+              
+            </ThemedView>
           )}
-          {selectedPageTab === PageTabs.Log && (
+          {selectedPageTab === PageTabs.Stats && (
             <ThemedView variant={"default"}>
               <Calendar
                 onSelectDate={(date: string) => setSelectedDate2(date)}
                 selected={selectedDate || ""}
+              />
+              <ThemedView
+                variant={"default"}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}>
+                <ThemedText type={"smallTitle"} style={{ paddingVertical: 10 }}>
+                  Volume
+                </ThemedText>
+                <Button
+                  icon={(props) => <Ionicons name="sparkles" {...props} />}
+                  theme={{ colors: { primary: iconColor } }}
+                  mode="text"
+                  contentStyle={{ flexDirection: "row-reverse" }}
+                  style={{
+                    borderRadius: 10,
+                    justifyContent: "center",
+                  }}
+                  onPress={() => console.log("Analyse")}>
+                  <ThemedText style={{ color: brandColor }}>Analyse</ThemedText>
+                </Button>
+              </ThemedView>
+
+              <BarChartCanvas
+                data={data}
+                x={(label) => x(label)}
+                y={(value) => y(value)}
+                barWidth={barWidth}
+                graphHeight={graphHeight}
+                canvasWidth={canvasWidth}
+                canvasHeight={canvasHeight}
+                progress={progress}
+                selectedBar={selectedBar}
+                selectedValue={selectedValue}
+                totalValue={0}
+                setSelectedDay={function (day: string): void {
+                  console.log(day);
+                }}
+                lightColor={""}
+                darkColor={""}
               />
             </ThemedView>
           )}

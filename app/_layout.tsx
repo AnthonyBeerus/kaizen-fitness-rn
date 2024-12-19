@@ -7,6 +7,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import ThemedHeader from '@/components/ThemedHeader';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -28,34 +29,36 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack
-        screenOptions={{
-          header: ({ options }) => (
-            <ThemedHeader
-              variant="backAction"
-              title={options.title ?? "Default Title"}
-            />
-          ),
-        }}>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="stats/stats"
-          options={{
-            headerShown: true,
-            title: "Stats",
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack
+          screenOptions={{
             header: ({ options }) => (
               <ThemedHeader
                 variant="backAction"
-                icon='cog'
                 title={options.title ?? "Default Title"}
               />
             ),
-          }}
-        />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+          }}>
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="stats/stats"
+            options={{
+              headerShown: true,
+              title: "Stats",
+              header: ({ options }) => (
+                <ThemedHeader
+                  variant="backAction"
+                  icon="cog"
+                  title={options.title ?? "Default Title"}
+                />
+              ),
+            }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

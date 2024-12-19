@@ -94,7 +94,7 @@ const BarChartScreen = () => {
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}>
       <ThemedView variant={"default"}>
         <ThemedText type="title"> Walk & Run Activity</ThemedText>
-        <AnimatedText selectedValue={selectedValue} />
+        <AnimatedText selectedValue={selectedValue} lightColor={""} darkColor={""} />
       </ThemedView>
       <ThemedView style={styles.canvas} variant={"default"}>
         <ThemedText type="subtitle" style={styles.textSteps}>
@@ -115,7 +115,7 @@ const BarChartScreen = () => {
                 barWidth={barWidth}
                 graphHeight={graphHeight}
                 label={dataPoint.label}
-                selectedBar={selectedBar} lightColor={""} darkColor={""}              />
+                selectedBar={selectedBar} lightColor={""} darkColor={""}/>
               <XAxisText
                 x={x(dataPoint.label)!}
                 y={canvasHeight}

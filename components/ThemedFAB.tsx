@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F04444",
     position: "absolute",
     bottom: 130,
-    right: 30,
+    right: 20,
     overflow: "hidden",
   },
   iconContainer: {

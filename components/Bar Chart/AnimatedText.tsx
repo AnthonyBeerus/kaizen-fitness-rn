@@ -6,9 +6,11 @@ import React from "react";
 
 type Props = {
   selectedValue: SharedValue<number>;
+  lightColor: string;
+  darkColor: string;
 };
 
-const AnimatedText = ({ selectedValue }: Props) => {
+const AnimatedText = ({ selectedValue, lightColor, darkColor }: Props) => {
   const font = useFont(require("../../assets/fonts/SpaceMono-Regular.ttf"), 88);
 
   const animatedText = useDerivedValue(() => {
@@ -16,7 +18,7 @@ const AnimatedText = ({ selectedValue }: Props) => {
   });
 
   const color = useThemeColor(
-    { light: "#111111", dark: "#FFFFFF" }, // Adjust colors as per your theme
+    { light: lightColor, dark: darkColor}, // Adjust colors as per your theme
     "text"
   );
 

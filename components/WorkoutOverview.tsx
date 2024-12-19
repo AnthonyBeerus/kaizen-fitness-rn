@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import { ThemedView } from "./ThemedView";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { ThemedVerticalContainer } from "./containers/ThemeVerticalContainer";
 import { ThemedHorizontalContainer } from "./containers/ThemeHorizontalContainer";
 import { useThemeColor } from "@/hooks/useThemeColor";
@@ -14,6 +14,8 @@ import ThemedButton from "./ThemedButton";
 import { color } from "d3";
 import { Button, Icon, IconButton, PaperProvider } from "react-native-paper";
 import { Play, Edit, EmojiHappy, EmojiNormal, Happyemoji } from "iconsax-react-native";
+import VerticalSlider from "rn-vertical-slider";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const DATA = [
   { id: "1", 
@@ -59,6 +61,14 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
       "containerBackground"
     )
 
+  const incontainerColor = useThemeColor(
+    {
+      light: lightColor,
+      dark: darkColor,
+    },
+    "inContainerBackground"
+  );
+
   const brandColor = useThemeColor(
     { light: Colors.light.brandColor, dark: Colors.dark.brandColor },
     "brandColor"
@@ -72,6 +82,14 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
     "text"
   );
 
+  const backgroundColor = useThemeColor(
+    { light: Colors.light.background, dark: Colors.dark.background },
+    "background"
+  );
+
+  const [value, setValue] = useState(0);
+  const [vertValue, setVertValue] = useState(0);
+
   return (
     <ThemedView variant={"default"} style={{ gap: 0, paddingVertical: 10 }}>
       <ThemedView variant="default" style={styles.workoutOverview}>
@@ -79,41 +97,30 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
           variant="default"
           style={styles.verticalContainer}>
           <ThemedText type="smallSubtitle">Intensity</ThemedText>
-          <ThemedView variant="transparent" style={styles.contentContainer}>
-            <IconButton
-              mode="outlined"
-              icon={(props) => <Ionicons name="snow" {...props} />}
-              theme={{ colors: { primary: brandColorIcon } }}
-              style={{
-                backgroundColor: containerColor,
-                borderRadius: 10,
-                marginBottom: 20,
-              }}
-              onPress={() => console.log("Low Intensity")}
-            />
-            <IconButton
-              mode="outlined"
-              icon={(props) => <Happyemoji {...props} />}
-              theme={{ colors: { primary: brandColorIcon } }}
-              style={{
-                backgroundColor: containerColor,
-                borderRadius: 10,
-                marginBottom: 20,
-              }}
-              onPress={() => console.log("Normal Intensity")}
-            />
-            <IconButton
-              mode="outlined"
-              icon={(props) => <Ionicons name="flame" {...props} />}
-              theme={{ colors: { primary: brandColorIcon } }}
-              style={{
-                backgroundColor: containerColor,
-                borderRadius: 10,
-                marginBottom: 20,
-              }}
-              onPress={() => console.log("High Intensity")}
-            />
-          </ThemedView>
+
+          <VerticalSlider
+            value={value}
+            onChange={(value) => setValue(value)}
+            height={150}
+            width={40}
+            step={1}
+            min={1}
+            max={5}
+            borderRadius={5}
+            minimumTrackTintColor={brandColor}
+            maximumTrackTintColor={backgroundColor}
+            showIndicator={true}
+            containerStyle={{
+              backgroundColor: backgroundColor,
+              borderRadius: 10,
+            }}
+            sliderStyle={{
+              backgroundColor: backgroundColor,
+              borderRadius: 5,
+              width: 40,
+              height: 180,
+            }}
+          />
         </ThemedVerticalContainer>
         <View style={styles.rightColumn}>
           <FlashList
@@ -227,7 +234,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   rightColumn: {
-    flex: 2.5,
+    flex: 2.6,
     justifyContent: "space-between",
     gap: 10,
     margin: 0,

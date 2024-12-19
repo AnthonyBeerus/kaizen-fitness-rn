@@ -37,7 +37,7 @@ const BarPath = ({
   );
   const mutedColor = useThemeColor(
     { light: lightColor, dark: darkColor }, // Muted text color
-    "containerBackground"
+    "inContainerBackground"
   );
 
   const color = useDerivedValue(() => {

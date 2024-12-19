@@ -61,7 +61,7 @@ const PageTabbutton = ({
             backgroundColor: "#F04444",
             borderRadius: 10,
             marginHorizontal: 5,
-            paddingVertical: 20,
+            paddingVertical: 26,
             height: dimensions.height - 10,
             width: pageTabbuttonWidth - 10,
           }]}
