@@ -45,15 +45,15 @@ const DATA = [
   { id: "3", title: "Item 3" },
 ];
 
-const PROGRAMNS = [
-  { id: "1", title: "Program 1" },
-  { id: "2", title: "Program 2" },
-  { id: "3", title: "Program 3" },
+const ROUTINENS = [
+  { id: "1", title: "Routine 1" },
+  { id: "2", title: "Routine 2" },
+  { id: "3", title: "Routine 3" },
 ];
 
 export enum PageTabs {
-  Program,
-  Progress,
+  Routine,
+  Plans,
   Stats,
 };
 
@@ -68,10 +68,10 @@ export default function HomeScreen() {
   const [selectedDate, setSelectedDate2] = useState<string | null>(null);
 
   const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(
-    PageTabs.Program
+    PageTabs.Routine
   );
   
-  const pageTabbuttons: PageTabButtonType[] = [{title: "Program"},{title:"Progress"}, {title: "Stats"}];
+  const pageTabbuttons: PageTabButtonType[] = [{title: "Routine"},{title:"Plans"}, {title: "Stats"}];
   
   const containerColor = useThemeColor(
     { light: Colors.light.containerBackground, dark: Colors.dark.containerBackground },
@@ -143,7 +143,7 @@ export default function HomeScreen() {
           setSelectedPageTab={setSelectedPageTab}
         />
         <ThemedView variant={"default"}>
-          {selectedPageTab === PageTabs.Program && (
+          {selectedPageTab === PageTabs.Routine && (
             <ThemedView variant={"default"}>
               <ThemedView
                 variant={"default"}
@@ -176,7 +176,7 @@ export default function HomeScreen() {
 
             </ThemedView>
           )}
-          {selectedPageTab === PageTabs.Progress && (
+          {selectedPageTab === PageTabs.Plans && (
             <ThemedView variant={"default"}>
               
             </ThemedView>
