@@ -13,16 +13,18 @@ import { ThemedMainContainer } from "./containers/ThemedMainContainerx";
 import ThemedButton from "./ThemedButton";
 import { color } from "d3";
 import { Button, Icon, IconButton, PaperProvider } from "react-native-paper";
-import { Play, Edit, EmojiHappy, EmojiNormal, Happyemoji } from "iconsax-react-native";
+import {
+  Play,
+  Edit,
+  EmojiHappy,
+  EmojiNormal,
+  Happyemoji,
+} from "iconsax-react-native";
 import VerticalSlider from "rn-vertical-slider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const DATA = [
-  { id: "1", 
-    title: "Chest Press", 
-    subTitle: "Chest Triceps", 
-    set_reps: "3x8" 
-  },
+  { id: "1", title: "Chest Press", subTitle: "Chest Triceps", set_reps: "3x8" },
   {
     id: "2",
     title: "Dumbell Rows",
@@ -30,7 +32,6 @@ const DATA = [
     set_reps: "3x12",
   },
 ];
-
 
 type WorkoutOverviewProps = {
   lightColor?: string;
@@ -42,7 +43,7 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
   darkColor,
 }) => {
   const iconColor = useThemeColor(
-    { light: lightColor, dark: darkColor},
+    { light: lightColor, dark: darkColor },
     "brandColor"
   );
 
@@ -54,12 +55,15 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
   const pillContainerColor = useThemeColor(
     { light: lightColor, dark: darkColor },
     "fadedText"
-  )
+  );
 
   const containerColor = useThemeColor(
-      { light: Colors.light.containerBackground, dark: Colors.dark.containerBackground },
-      "containerBackground"
-    )
+    {
+      light: Colors.light.containerBackground,
+      dark: Colors.dark.containerBackground,
+    },
+    "containerBackground"
+  );
 
   const incontainerColor = useThemeColor(
     {
@@ -72,7 +76,7 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
   const brandColor = useThemeColor(
     { light: Colors.light.brandColor, dark: Colors.dark.brandColor },
     "brandColor"
-  )
+  );
 
   const inverseButtonColor = useThemeColor(
     {
@@ -90,6 +94,53 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
   const [value, setValue] = useState(0);
   const [vertValue, setVertValue] = useState(0);
 
+  // Utility to interpolate colors
+  const interpolateColor = (
+    value: number,
+    min: number,
+    max: number,
+    colors: string[]
+  ) => {
+    const range = max - min;
+    const relativeValue = (value - min) / range;
+
+    if (relativeValue <= 0.5) {
+      // Blend between colors[0] (blue) and colors[1] (green)
+      const weight = relativeValue * 2; // Scale 0–0.5 to 0–1
+      return blendColors(colors[0], colors[1], weight);
+    } else {
+      // Blend between colors[1] (green) and colors[2] (red)
+      const weight = (relativeValue - 0.5) * 2; // Scale 0.5–1 to 0–1
+      return blendColors(colors[1], colors[2], weight);
+    }
+  };
+
+  // Linear color blending
+  const blendColors = (color1: string, color2: string, weight: number) => {
+    const c1 = parseInt(color1.slice(1), 16); // Convert hex to int
+    const c2 = parseInt(color2.slice(1), 16);
+
+    const r1 = (c1 >> 16) & 0xff;
+    const g1 = (c1 >> 8) & 0xff;
+    const b1 = c1 & 0xff;
+
+    const r2 = (c2 >> 16) & 0xff;
+    const g2 = (c2 >> 8) & 0xff;
+    const b2 = c2 & 0xff;
+
+    const r = Math.round(r1 + (r2 - r1) * weight);
+    const g = Math.round(g1 + (g2 - g1) * weight);
+    const b = Math.round(b1 + (b2 - b1) * weight);
+
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+  };
+
+  const trackColor = interpolateColor(value, 1, 5, [
+    "#449AF0",
+    "#F5B257",
+    brandColor,
+  ]);
+
   return (
     <ThemedView variant={"default"} style={{ gap: 0, paddingVertical: 10 }}>
       <ThemedView variant="default" style={styles.workoutOverview}>
@@ -97,17 +148,16 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
           variant="default"
           style={styles.verticalContainer}>
           <ThemedText type="smallSubtitle">Intensity</ThemedText>
-
           <VerticalSlider
             value={value}
             onChange={(value) => setValue(value)}
             height={150}
             width={40}
-            step={1}
+            step={0.1}
             min={1}
             max={5}
             borderRadius={5}
-            minimumTrackTintColor={brandColor}
+            minimumTrackTintColor={trackColor}
             maximumTrackTintColor={backgroundColor}
             showIndicator={true}
             containerStyle={{
@@ -247,7 +297,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom:6,
+    marginBottom: 6,
   },
   verticalContentContainer: {
     flexDirection: "column", // Stack icon above text
