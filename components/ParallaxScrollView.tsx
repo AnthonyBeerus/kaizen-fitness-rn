@@ -14,6 +14,7 @@ import { ThemedText } from "./ThemedText";
 import { ThemedMainContainer } from "./containers/ThemedMainContainerx";
 import ThemedButton from "./ThemedButton";
 import { Button, IconButton, Title } from "react-native-paper";
+import React from "react";
 
 const HEADER_MAX_HEIGHT = 200;
 const HEADER_MIN_HEIGHT = 120;

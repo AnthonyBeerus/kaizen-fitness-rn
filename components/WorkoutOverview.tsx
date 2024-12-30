@@ -12,7 +12,7 @@ import { FlashList } from "@shopify/flash-list";
 import { ThemedMainContainer } from "./containers/ThemedMainContainerx";
 import ThemedButton from "./ThemedButton";
 import { color } from "d3";
-import { Button, Icon, IconButton, PaperProvider } from "react-native-paper";
+import { Button, Card, Icon, IconButton, PaperProvider } from "react-native-paper";
 import {
   Play,
   Edit,
@@ -22,6 +22,7 @@ import {
 } from "iconsax-react-native";
 import VerticalSlider from "rn-vertical-slider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { router } from "expo-router";
 
 const DATA = [
   { id: "1", title: "Chest Press", subTitle: "Chest Triceps", set_reps: "3x8" },
@@ -31,6 +32,7 @@ const DATA = [
     subTitle: "Back, Biceps",
     set_reps: "3x12",
   },
+  { id: "3", title: "Squats", subTitle: "Legs", set_reps: "3x10" },
 ];
 
 type WorkoutOverviewProps = {
@@ -143,6 +145,30 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
 
   return (
     <ThemedView variant={"default"} style={{ gap: 0, paddingVertical: 10 }}>
+      <ThemedView
+        variant={"default"}
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}>
+        <ThemedText type={"smallTitle"} style={{ paddingVertical: 10 }}>
+          Today's Workout
+        </ThemedText>
+        <Button
+          icon={"Edit"}
+          theme={{ colors: { primary: iconColor } }}
+          mode="text"
+          contentStyle={{ flexDirection: "row-reverse" }}
+          style={{
+            borderRadius: 10,
+            justifyContent: "center",
+          }}
+          onPress={() => router.push("../workout/routine-details")}>
+          <ThemedText style={{ color: brandColor }}>
+            View Details
+          </ThemedText>
+        </Button>
+      </ThemedView>
       <ThemedView variant="default" style={styles.workoutOverview}>
         <ThemedVerticalContainer
           variant="default"
@@ -172,95 +198,82 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
             }}
           />
         </ThemedVerticalContainer>
-        <View style={styles.rightColumn}>
+        <View style={[{ backgroundColor: containerColor }, styles.rightColumn]}>
           <FlashList
             data={DATA}
             renderItem={({ item }) => (
-              <ThemedHorizontalContainer
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-                variant={"inContainer"}>
-                <ThemedView
-                  variant={"transparent"}
-                  style={[
-                    styles.pillContainer,
-                    { backgroundColor: pillContainerColor },
-                  ]}></ThemedView>
-                <ThemedView variant={"transparent"} style={{ flex: 10 }}>
-                  <ThemedText
-                    type="smallTitle"
-                    style={{
-                      paddingTop: 20,
-                      paddingLeft: 20,
-                      justifyContent: "space-between",
-                    }}>
-                    {item.title}
-                  </ThemedText>
+              <Card style={{ borderRadius: 10, margin: 10, backgroundColor: containerColor }}>
+                <ThemedHorizontalContainer
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    height: 66,
+                    backgroundColor: containerColor,
+                  }}
+                  variant={"default"}>
                   <ThemedView
                     variant={"transparent"}
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}>
+                    style={[
+                      styles.pillContainer,
+                      { backgroundColor: pillContainerColor },
+                    ]}></ThemedView>
+                  <ThemedView variant={"transparent"} style={{ flex: 10 }}>
                     <ThemedText
-                      type="smallSubtitle"
+                      type="smallTitle"
                       style={{
-                        paddingTop: 10,
-                        paddingBottom: 20,
+                        paddingTop: 20,
                         paddingLeft: 20,
                         justifyContent: "space-between",
                       }}>
-                      {item.subTitle}
+                      {item.title}
                     </ThemedText>
                   </ThemedView>
-                </ThemedView>
-                <ThemedView
-                  variant={"transparent"}
-                  style={[styles.sets_repsContainer]}>
-                  <ThemedText type="smallTitle">{item.set_reps}</ThemedText>
-                </ThemedView>
-              </ThemedHorizontalContainer>
+                  <ThemedView
+                    variant={"transparent"}
+                    style={[styles.sets_repsContainer]}>
+                    <ThemedText type="smallTitle">{item.set_reps}</ThemedText>
+                  </ThemedView>
+                </ThemedHorizontalContainer>
+              </Card>
             )}
             estimatedItemSize={100}
-            ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+            ItemSeparatorComponent={() => <View style={{ height: 0 }} />}
           />
-          <ThemedView
-            variant="default"
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              gap: 10,
-            }}>
-            <IconButton
-              icon={(props) => <Play {...props} />}
-              theme={{ colors: { primary: brandColorIcon } }}
-              mode="contained"
-              style={{
-                borderRadius: 10,
-                margin: 0,
-                width: "100%",
-                backgroundColor: brandColor,
-                flex: 3,
-              }}
-              onPress={() => console.log("Start Workout")}
-            />
-            <IconButton
-              icon={(props) => <Ionicons name="sparkles" {...props} />}
-              theme={{ colors: { primary: containerColor } }}
-              mode="contained"
-              style={{
-                borderRadius: 10,
-                margin: 0,
-                width: "100%",
-                backgroundColor: inverseButtonColor,
-                flex: 1,
-              }}
-              onPress={() => console.log("AI insights")}
-            />
-          </ThemedView>
         </View>
+      </ThemedView>
+      <ThemedView
+        variant="default"
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          gap: 10,
+        }}>
+        <IconButton
+          icon={(props) => <Play {...props} />}
+          theme={{ colors: { primary: brandColorIcon } }}
+          mode="contained"
+          style={{
+            borderRadius: 10,
+            margin: 0,
+            width: "100%",
+            backgroundColor: brandColor,
+            flex: 3,
+          }}
+          onPress={() => console.log("Start Workout")}
+        />
+        <IconButton
+          icon={(props) => <Ionicons name="sparkles" {...props} />}
+          theme={{ colors: { primary: containerColor } }}
+          mode="contained"
+          style={{
+            borderRadius: 10,
+            margin: 0,
+            width: "100%",
+            backgroundColor: inverseButtonColor,
+            flex: 1,
+          }}
+          onPress={() => console.log("AI insights")}
+        />
       </ThemedView>
     </ThemedView>
   );
@@ -271,7 +284,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 10,
-    height: 260,
+    height: 270,
   },
   viewDetailsSection: {
     flexDirection: "row",
@@ -286,9 +299,12 @@ const styles = StyleSheet.create({
   rightColumn: {
     flex: 2.6,
     justifyContent: "space-between",
-    gap: 10,
+    gap: 0,
     margin: 0,
     padding: 0,
+    height: 260,
+    borderRadius: 10,
+    
   },
   horizontalContainer: {
     flex: 1,
@@ -318,8 +334,6 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 5,
     margin: 20,
-    marginLeft: 0,
-    marginTop: 40,
     flex: 3,
     alignItems: "flex-start",
   },

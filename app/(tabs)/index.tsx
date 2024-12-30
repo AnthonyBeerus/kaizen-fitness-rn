@@ -38,6 +38,7 @@ import { useBarChartLogic } from "@/components/Bar Chart/logic/BarChartLogic";
 import BarChartCanvas from "@/components/Bar Chart/BarChartCanvas";
 import AnimatedText from "@/components/Bar Chart/AnimatedText";
 import { useSharedValue } from "react-native-reanimated";
+import { Link, router } from "expo-router";
 
 const DATA = [
   { id: "1", title: "Item 1" },
@@ -145,41 +146,15 @@ export default function HomeScreen() {
         <ThemedView variant={"default"}>
           {selectedPageTab === PageTabs.Routine && (
             <ThemedView variant={"default"}>
-              <ThemedView
-                variant={"default"}
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}>
-                <ThemedText type={"smallTitle"} style={{ paddingVertical: 10 }}>
-                  Today's Workout
-                </ThemedText>
-                <Button
-                  icon={"Edit"}
-                  theme={{ colors: { primary: iconColor } }}
-                  mode="text"
-                  contentStyle={{ flexDirection: "row-reverse" }}
-                  style={{
-                    borderRadius: 10,
-                    justifyContent: "center",
-                  }}
-                  onPress={() => console.log("View Details")}>
-                  <ThemedText style={{ color: brandColor }}>
-                    View Details
-                  </ThemedText>
-                </Button>
-              </ThemedView>
+              
               <WorkoutOverview
                 lightColor={Colors.light.icon} // Pass light theme icon color
                 darkColor={Colors.dark.icon} // Pass dark theme icon color
               />
-
             </ThemedView>
           )}
           {selectedPageTab === PageTabs.Plans && (
-            <ThemedView variant={"default"}>
-              
-            </ThemedView>
+            <ThemedView variant={"default"}></ThemedView>
           )}
           {selectedPageTab === PageTabs.Stats && (
             <ThemedView variant={"default"}>

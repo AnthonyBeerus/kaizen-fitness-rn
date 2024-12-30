@@ -20,7 +20,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         header: ({ options }) => (
-          <ThemedHeader title={options.title ?? "Default Title"} />
+          <ThemedHeader variant='backAction' title={options.title ?? "Default Title"} />
         ),
         tabBarStyle: {
           backgroundColor: Colors[colorScheme ?? "light"].background,
@@ -30,9 +30,6 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Gym",
-          header: ({ options }) => (
-            <ThemedHeader title={options.title ?? "Default Title"} />
-          ),
         }}
       />
       <Tabs.Screen

@@ -8,6 +8,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import PageTabbutton, { PageTabButtonType } from '@/components/navigation/PageTabbutton';
 import { useState } from 'react';
+import React from 'react';
 
 export enum PageTabs {
   Meals,

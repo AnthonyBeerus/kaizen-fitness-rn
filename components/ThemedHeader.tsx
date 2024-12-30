@@ -1,35 +1,47 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { ThemedText } from "./ThemedText";
-import { ThemedView } from "./ThemedView";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { Appbar, IconButton, PaperProvider, useTheme } from "react-native-paper";
+import { StyleSheet } from "react-native";
+import { Appbar, IconButton } from "react-native-paper";
+import { useRouter } from "expo-router"; // For Expo Router navigation
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { ThemedView } from "./ThemedView";
+import { ThemedText } from "./ThemedText";
 
 interface ThemedHeaderProps {
-    icon?: string;
-    title: string;
-    lightColor?: string;
-    darkColor?: string;
-    variant?: "default" | "backAction";
+  icon?: string;
+  title: string;
+  lightColor?: string;
+  darkColor?: string;
+  variant?: "default" | "backAction";
 }
 
-const ThemedHeader: React.FC<ThemedHeaderProps> = ({ title, icon, lightColor, darkColor, variant = "default" }) => {
-  const navigation = useNavigation();
+const ThemedHeader: React.FC<ThemedHeaderProps> = ({
+  title,
+  icon,
+  lightColor,
+  darkColor,
+  variant = "default",
+}) => {
+  // Replace React Navigation's "useNavigation" with Expo Router's "useRouter" if you're using Expo Router
+  const router = useRouter();
 
-  const iconColor = useThemeColor({ light: lightColor, dark: darkColor }, "icon");
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, "background");
+  const iconColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "icon"
+  );
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background"
+  );
 
   return (
-    <ThemedView style={styles.container} variant={"default"}>
+    <ThemedView style={styles.container} variant="default">
       <Appbar.Header style={[{ backgroundColor }]}>
         {variant === "backAction" && (
-          <ThemedView variant={"default"} style={styles.headerContent}>
+          <ThemedView variant="default" style={styles.headerContent}>
             <IconButton
               icon="chevron-left"
               size={30}
-              onPress={navigation.goBack}
+              onPress={() => router.back()} // Go back using Expo Router
               iconColor={iconColor}
               style={styles.backButton}
             />
@@ -37,24 +49,15 @@ const ThemedHeader: React.FC<ThemedHeaderProps> = ({ title, icon, lightColor, da
             <Appbar.Action
               size={30}
               icon={icon ?? "dots-vertical"}
-              style={[styles.backButton]}
+              style={styles.backButton}
               iconColor={iconColor}
+              onPress={() => console.log("Action button pressed")}
             />
           </ThemedView>
         )}
         {variant === "default" && (
-          <ThemedView variant={"default"} style={styles.headerContent}>
-            <ThemedText style={styles.title}>{title}</ThemedText>
-            <Appbar.Action
-              size={30}
-              icon="account"
-              style={[styles.backButton]}
-              iconColor={iconColor}
-              onPress={() => null}
-            />
-          </ThemedView>
+          <Appbar.Content title={title} titleStyle={{ color: iconColor }} />
         )}
-
       </Appbar.Header>
     </ThemedView>
   );
@@ -62,31 +65,19 @@ const ThemedHeader: React.FC<ThemedHeaderProps> = ({ title, icon, lightColor, da
 
 const styles = StyleSheet.create({
   container: {
-  },
-  backButton: {
-    
-  },
-  backText: {
-    fontSize: 18,
+    width: "100%",
   },
   headerContent: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 20,
-    
-  },
-  backactiontitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
     flex: 1,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    paddingLeft: 20,
+  backButton: {
+    marginLeft: 0,
+  },
+  backactiontitle: {
+    fontSize: 18,
+    marginLeft: 10,
     flex: 1,
   },
 });

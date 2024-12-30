@@ -20,7 +20,7 @@ export function ThemedTabBar({
   return (
     <View>
       <View style={styles.tabBar}>
-        {state.routes.map((route, index) => {
+        {state.routes.map((route: { key: string; name: string; params?: object }, index: number) => {
           const { options } = descriptors[route.key];
           const label =
             typeof options.tabBarLabel === "function"
