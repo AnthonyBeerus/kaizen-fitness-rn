@@ -14,18 +14,9 @@ const DATA = [
   { id: "3", title: "Stat 3" },
 ];
 
-export enum PageTabs {
-  Mood,
-  Stress,
-  Mindfulness,
-}
 
-export default function MentalHealthScreen() {
 
-  const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(PageTabs.Mood);
-
-  const pageTabbuttons: PageTabButtonType[] = [{title: "Mood"},{title:"Journal"}, {title: "Mindfullness"}];
-
+export default function Journal() {
   return (
     <>
       <ParallaxScrollView
@@ -33,21 +24,8 @@ export default function MentalHealthScreen() {
         variant="headerImage"
         
         >
-        <PageTabbutton
-          pageTabbuttons={pageTabbuttons}
-          selectedPageTab={selectedPageTab}
-          setSelectedPageTab={setSelectedPageTab}
-        />
         <ThemedView variant={"default"}>
-          {selectedPageTab === PageTabs.Mood && (
-            <ThemedText>Mood</ThemedText>
-          )}
-          {selectedPageTab === PageTabs.Stress && (
-            <ThemedText>Journal</ThemedText>
-          )}
-          {selectedPageTab === PageTabs.Mindfulness && (
-            <ThemedText>Profile</ThemedText>
-          )}
+            <ThemedText>Journal</ThemedText>          
         </ThemedView>
       </ParallaxScrollView>
     </>

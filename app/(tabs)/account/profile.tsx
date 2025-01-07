@@ -16,6 +16,9 @@ const DATA = [
   { id: "1", title: "Stat 1" },
   { id: "2", title: "Stat 2" },
   { id: "3", title: "Stat 3" },
+  { id: "4", title: "Stat 4" },
+  { id: "5", title: "Stat 5" },
+  { id: "6", title: "Stat 6" },
 ];
 
 export enum PageTabs {
@@ -24,7 +27,7 @@ export enum PageTabs {
   Profile,
 }
 
-export default function ProfileScreen() {
+export default function Profile() {
 
   const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(PageTabs.Stats);
 
@@ -37,11 +40,7 @@ export default function ProfileScreen() {
       <ParallaxScrollView
         headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
         variant="headerImage">
-        <PageTabbutton
-          pageTabbuttons={pageTabbuttons}
-          selectedPageTab={selectedPageTab}
-          setSelectedPageTab={setSelectedPageTab}
-        />
+        
         <ThemedView variant={"default"}>
           {selectedPageTab === PageTabs.Stats && (
             <FlashList

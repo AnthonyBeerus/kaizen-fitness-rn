@@ -16,38 +16,47 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      tabBar={props => <ThemedTabBar {...props} />}
+      tabBar={(props) => <ThemedTabBar {...props} />}
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         header: ({ options }) => (
-          <ThemedHeader variant='backAction' title={options.title ?? "Default Title"} />
+          <ThemedHeader
+            variant="default"
+            title={options.title ?? "Default Title"}
+          />
         ),
         tabBarStyle: {
           backgroundColor: Colors[colorScheme ?? "light"].background,
         },
       }}>
       <Tabs.Screen
-        name="index"
+        name="gym"
         options={{
           title: "Gym",
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="nutrition"
         options={{
           title: "Nutrition",
         }}
       />
       <Tabs.Screen
-        name="stats"
+        name="ai/chat"
+        options={{
+          title: "AI",
+        }}
+      />
+      <Tabs.Screen
+        name="wellness"
         options={{
           title: "Wellness Hub",
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="account"
         options={{
-          title: "Profile",
+          title: "Account",
         }}
       />
     </Tabs>

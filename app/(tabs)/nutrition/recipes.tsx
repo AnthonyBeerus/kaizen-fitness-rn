@@ -16,7 +16,7 @@ export enum PageTabs {
   Recipes,
 }
 
-export default function ExploreScreen() {
+export default function Recipes() {
 
   const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(
       PageTabs.Meals
@@ -29,22 +29,9 @@ export default function ExploreScreen() {
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       variant="headerImage">
-      <PageTabbutton
-        pageTabbuttons={pageTabbuttons}
-        selectedPageTab={selectedPageTab}
-        setSelectedPageTab={setSelectedPageTab}
-      />
       <ThemedView variant={"default"}>
-                {selectedPageTab === PageTabs.Meals && (
-                  <ThemedText>Meals</ThemedText>
-                )}
-                {selectedPageTab === PageTabs.Hydration && (
-                  <ThemedText>Hydration</ThemedText>
-                )}
-                {selectedPageTab === PageTabs.Recipes && (
-                  <ThemedText>Recipes</ThemedText>
-                )}
-              </ThemedView>
+          <ThemedText>Recipes</ThemedText>
+      </ThemedView>
     </ParallaxScrollView>
   );
 }

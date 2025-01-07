@@ -19,6 +19,7 @@ import {
   EmojiHappy,
   EmojiNormal,
   Happyemoji,
+  Edit2,
 } from "iconsax-react-native";
 import VerticalSlider from "rn-vertical-slider";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -144,7 +145,7 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
   ]);
 
   return (
-    <ThemedView variant={"default"} style={{ gap: 0, paddingVertical: 10 }}>
+    <ThemedView variant={"default"} style={{ gap: 0, paddingVertical: 0 }}>
       <ThemedView
         variant={"default"}
         style={{
@@ -155,7 +156,7 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
           Today's Workout
         </ThemedText>
         <Button
-          icon={"Edit"}
+          icon={(props) => <Edit {...props} />}
           theme={{ colors: { primary: iconColor } }}
           mode="text"
           contentStyle={{ flexDirection: "row-reverse" }}
@@ -164,9 +165,7 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
             justifyContent: "center",
           }}
           onPress={() => router.push("../workout/routine-details")}>
-          <ThemedText style={{ color: brandColor }}>
-            View Details
-          </ThemedText>
+          <ThemedText style={{ color: brandColor }}>View Details</ThemedText>
         </Button>
       </ThemedView>
       <ThemedView variant="default" style={styles.workoutOverview}>
@@ -202,7 +201,12 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
           <FlashList
             data={DATA}
             renderItem={({ item }) => (
-              <Card style={{ borderRadius: 10, margin: 10, backgroundColor: containerColor }}>
+              <Card
+                style={{
+                  borderRadius: 10,
+                  margin: 10,
+                  backgroundColor: containerColor,
+                }}>
                 <ThemedHorizontalContainer
                   style={{
                     flexDirection: "row",

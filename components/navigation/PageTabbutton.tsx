@@ -14,6 +14,11 @@ type PageTabButtonProps = {
     setSelectedPageTab: (index: number) => void;
 };
 
+//* Put this code in pages where implemented
+//* export enum PageTabs {Mood,Stress,Mindfulness,}*//
+//* const [selectedPageTab, setSelectedPageTab] = useState<PageTabs>(PageTabs.Mood);
+//* const pageTabbuttons: PageTabButtonType[] = [{title: "Mood"},{title:"Journal"}, {title: "Mindfullness"}];
+
 const PageTabbutton = ({
     pageTabbuttons ,
     selectedPageTab,

@@ -7,6 +7,7 @@ import { useColorScheme } from "@/hooks/useColorScheme.web";
 import {
   DarkTheme,
   DefaultTheme,
+  Link,
   ThemeProvider,
 } from "@react-navigation/native";
 import React, { useState } from "react";
@@ -17,7 +18,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { TextInput } from "react-native-paper";
+import { RadioButton, TextInput } from "react-native-paper";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button } from "react-native-paper";
@@ -96,13 +97,12 @@ export default function LoginScreen() {
                   <ThemedButton
                     variant="primary"
                     title="Sign in"
-                    href={"/(tabs)"}
+                    href={"/(tabs)/gym/routine"}
                     onPress={() => {
                       // handle link
                     }}
                   />
                 </View>
-
                 <TouchableOpacity
                   onPress={() => {
                     // handle link

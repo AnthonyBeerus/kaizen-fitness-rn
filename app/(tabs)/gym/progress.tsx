@@ -61,7 +61,7 @@ export enum PageTabs {
 
 
 
-export default function HomeScreen() {
+export default function Progress() {
   const [value, setValue] = React.useState("");
   function setSelectedDate(date: Date): void {
     throw new Error("Function not implemented.");
@@ -127,8 +127,6 @@ export default function HomeScreen() {
     const touchHandler = (e: any) => {
       console.log("Canvas touched:", e.nativeEvent);
     };
-
-
   return (
     <PaperProvider
       settings={{
@@ -138,25 +136,7 @@ export default function HomeScreen() {
         headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
         variant="headerImage">
         {/* <ThemedSearchbar /> */}
-        <PageTabbutton
-          pageTabbuttons={pageTabbuttons}
-          selectedPageTab={selectedPageTab}
-          setSelectedPageTab={setSelectedPageTab}
-        />
-        <ThemedView variant={"default"}>
-          {selectedPageTab === PageTabs.Routine && (
-            <ThemedView variant={"default"}>
-              
-              <WorkoutOverview
-                lightColor={Colors.light.icon} // Pass light theme icon color
-                darkColor={Colors.dark.icon} // Pass dark theme icon color
-              />
-            </ThemedView>
-          )}
-          {selectedPageTab === PageTabs.Plans && (
-            <ThemedView variant={"default"}></ThemedView>
-          )}
-          {selectedPageTab === PageTabs.Stats && (
+        <ThemedView variant={"default"}>          
             <ThemedView variant={"default"}>
               <Calendar
                 onSelectDate={(date: string) => setSelectedDate2(date)}
@@ -184,7 +164,6 @@ export default function HomeScreen() {
                   <ThemedText style={{ color: brandColor }}>Analyse</ThemedText>
                 </Button>
               </ThemedView>
-
               <BarChartCanvas
                 data={data}
                 x={(label) => x(label)}
@@ -204,7 +183,6 @@ export default function HomeScreen() {
                 darkColor={""}
               />
             </ThemedView>
-          )}
         </ThemedView>
       </ParallaxScrollView>
     </PaperProvider>
