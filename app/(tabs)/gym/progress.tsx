@@ -136,34 +136,35 @@ export default function Progress() {
         headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
         variant="headerImage">
         {/* <ThemedSearchbar /> */}
-        <ThemedView variant={"default"}>          
-            <ThemedView variant={"default"}>
-              <Calendar
+        <ThemedView variant={"default"}>
+          <ThemedView variant={"default"}>
+            {/* <Calendar
                 onSelectDate={(date: string) => setSelectedDate2(date)}
                 selected={selectedDate || ""}
-              />
-              <ThemedView
-                variant={"default"}
+              /> */}
+            <ThemedView
+              variant={"default"}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}>
+              <ThemedText type={"smallTitle"} style={{ paddingVertical: 10 }}>
+                Volume
+              </ThemedText>
+              <Button
+                icon={(props) => <Ionicons name="sparkles" {...props} />}
+                theme={{ colors: { primary: iconColor } }}
+                mode="text"
+                contentStyle={{ flexDirection: "row-reverse" }}
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}>
-                <ThemedText type={"smallTitle"} style={{ paddingVertical: 10 }}>
-                  Volume
-                </ThemedText>
-                <Button
-                  icon={(props) => <Ionicons name="sparkles" {...props} />}
-                  theme={{ colors: { primary: iconColor } }}
-                  mode="text"
-                  contentStyle={{ flexDirection: "row-reverse" }}
-                  style={{
-                    borderRadius: 10,
-                    justifyContent: "center",
-                  }}
-                  onPress={() => console.log("Analyse")}>
-                  <ThemedText style={{ color: brandColor }}>Analyse</ThemedText>
-                </Button>
-              </ThemedView>
+                  borderRadius: 10,
+                  justifyContent: "center",
+                }}
+                onPress={() => console.log("Analyse")}>
+                <ThemedText style={{ color: brandColor }}>Analyse</ThemedText>
+              </Button>
+            </ThemedView>
+            <ThemedView variant={"default"}>
               <BarChartCanvas
                 data={data}
                 x={(label) => x(label)}
@@ -183,6 +184,7 @@ export default function Progress() {
                 darkColor={""}
               />
             </ThemedView>
+          </ThemedView>
         </ThemedView>
       </ParallaxScrollView>
     </PaperProvider>

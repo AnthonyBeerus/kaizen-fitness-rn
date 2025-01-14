@@ -116,7 +116,7 @@ const BarChartCanvas: React.FC<BarChartCanvasProps> = ({
             onTouchStart={touchHandler}
             style={{
               width: canvasWidth,
-              height: canvasHeight,
+              height: canvasHeight + 20,
             }}>
             {data.map((dataPoint, index) => (
               <Group key={index}>
@@ -140,6 +140,7 @@ const BarChartCanvas: React.FC<BarChartCanvasProps> = ({
               </Group>
             ))}
           </Canvas>
+          
         </Card.Content>
       </Card>
     </PaperProvider>
@@ -155,9 +156,10 @@ const styles = StyleSheet.create({
     },
     canvas: {
         width: "100%",
-        height: 340,
+        height: 360,
         marginRight: 10,
         elevation: 5,
         borderRadius: 10,
+        paddingBottom: 10,
     },
 });

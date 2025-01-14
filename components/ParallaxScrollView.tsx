@@ -131,7 +131,7 @@ export default function ParallaxScrollView({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
+    paddingVertical: 10,
   },
   headerImage: {
     height: HEADER_MAX_HEIGHT,
