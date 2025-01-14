@@ -44,6 +44,10 @@ const SegmentedControl: React.FC<SegmentedControlProps> = React.memo(
       { light: lightColor, dark: darkColor },
       "containerBackground"
     );
+    const activeBoxShadow = useThemeColor(
+      { light: lightColor, dark: darkColor },
+      "brandColor"
+    );
     
 
     return (
@@ -52,7 +56,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = React.memo(
           styles.container,
           {
             width: segmentedControlWidth,
-            borderRadius: 20,
+            borderRadius: 10,
             paddingLeft: internalPadding / 2,
           },
         ]}
@@ -61,7 +65,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = React.memo(
           style={[
             {
               width: itemWidth,
-
+              shadowColor: activeBoxShadow,
               backgroundColor: activeBoxColor,
             },
             rStyle,
@@ -93,17 +97,16 @@ const SegmentedControl: React.FC<SegmentedControlProps> = React.memo(
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    height: 55,
+    height: 60,
   },
   activeBox: {
     position: "absolute",
     borderRadius: 10,
-    shadowColor: "#F04444",
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.1,
     elevation: 6,
     height: "80%",
     top: "10%",

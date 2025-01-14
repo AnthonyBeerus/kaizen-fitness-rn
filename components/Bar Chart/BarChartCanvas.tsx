@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     },
     canvas: {
         width: "100%",
-        height: 360,
+        height: 380,
         marginRight: 10,
         elevation: 5,
         borderRadius: 10,
