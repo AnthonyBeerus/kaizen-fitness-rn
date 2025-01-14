@@ -18,8 +18,8 @@ type SegmentedControlProps = {
   options: string[];
   selectedOption: string;
   onOptionPress?: (option: string) => void;
-  lightColor: string;
-  darkColor: string;
+  lightColor?: string;
+  darkColor?: string;
 };
 
 const SegmentedControl: React.FC<SegmentedControlProps> = React.memo(
@@ -44,6 +44,10 @@ const SegmentedControl: React.FC<SegmentedControlProps> = React.memo(
       { light: lightColor, dark: darkColor },
       "containerBackground"
     );
+    const containerColor = useThemeColor(
+      { light: lightColor, dark: darkColor },
+      "background"
+    );
     const activeBoxShadow = useThemeColor(
       { light: lightColor, dark: darkColor },
       "brandColor"
@@ -58,6 +62,7 @@ const SegmentedControl: React.FC<SegmentedControlProps> = React.memo(
             width: segmentedControlWidth,
             borderRadius: 10,
             paddingLeft: internalPadding / 2,
+            backgroundColor: containerColor,
           },
         ]}
         variant={"default"}>
@@ -107,7 +112,7 @@ const styles = StyleSheet.create({
       height: 0,
     },
     shadowOpacity: 0.1,
-    elevation: 6,
+    elevation: 2,
     height: "80%",
     top: "10%",
   },
