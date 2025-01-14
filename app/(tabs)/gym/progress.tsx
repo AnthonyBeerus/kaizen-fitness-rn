@@ -149,10 +149,6 @@ export default function Progress() {
         {/* <ThemedSearchbar /> */}
         <ThemedView variant={"default"}>
           <ThemedView variant={"default"}>
-            {/* <Calendar
-                onSelectDate={(date: string) => setSelectedDate2(date)}
-                selected={selectedDate || ""}
-              /> */}
             <ThemedView
               variant={"default"}
               style={{
@@ -175,25 +171,7 @@ export default function Progress() {
                 <ThemedText style={{ color: brandColor }}>Analyse</ThemedText>
               </Button>
             </ThemedView>
-            <ThemedView variant={"inContainer"}>
-              {/* <BarChartCanvas
-                data={data2}
-                x={(label) => x(label)}
-                y={(value) => y(value)}
-                barWidth={barWidth}
-                graphHeight={graphHeight}
-                canvasWidth={canvasWidth}
-                canvasHeight={canvasHeight}
-                progress={progress}
-                selectedBar={selectedBar}
-                selectedValue={selectedValue}
-                totalValue={0}
-                setSelectedDay={function (day: string): void {
-                  console.log(day);
-                }}
-                lightColor={""}
-                darkColor={""}
-              /> */}
+            <ThemedView variant={"inContainer"} style={{borderRadius: 10}}>
               <WeeklyBarChart
                 weeks={data}
                 activeWeekIndex={activeWeekIndex}
