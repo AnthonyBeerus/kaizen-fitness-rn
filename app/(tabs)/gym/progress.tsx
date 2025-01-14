@@ -39,6 +39,9 @@ import BarChartCanvas from "@/components/Bar Chart/BarChartCanvas";
 import AnimatedText from "@/components/Bar Chart/AnimatedText";
 import { useSharedValue } from "react-native-reanimated";
 import { Link, router } from "expo-router";
+import { WeeklyBarChart } from "@/components/Bar Chart/WeeklyBarChart";
+import { data } from "@/constants/bar-chart-data";
+import { SegmentedControl } from "@/components/SegmentedControl";
 
 const DATA = [
   { id: "1", title: "Item 1" },
@@ -57,6 +60,8 @@ export enum PageTabs {
   Plans,
   Stats,
 };
+
+const options = ["Volume", "Sets", "Duration"];
 
 
 
@@ -95,9 +100,11 @@ export default function Progress() {
           "text"
           );
 
+  
+
   //Bar chart logic
 
-   const data = [
+   const data2 = [
       { label: "Sun", value: 100 },
      { label: "Mon", value: 120 },
      { label: "Tue", value: 150 },
@@ -118,7 +125,7 @@ export default function Progress() {
      progress,
      selectedBar,
      startAnimation,
-   } = useBarChartLogic(data, canvasWidth, canvasHeight);
+   } = useBarChartLogic(data2, canvasWidth, canvasHeight);
 
     useEffect(() => {
       startAnimation(); // Trigger animation on component mount
@@ -127,6 +134,10 @@ export default function Progress() {
     const touchHandler = (e: any) => {
       console.log("Canvas touched:", e.nativeEvent);
     };
+
+    const [activeWeekIndex, setActiveWeekIndex] = useState(0);
+
+    const [selectedOption, setSelectedOption] = useState("Standard");
   return (
     <PaperProvider
       settings={{
@@ -149,7 +160,7 @@ export default function Progress() {
                 justifyContent: "space-between",
               }}>
               <ThemedText type={"smallTitle"} style={{ paddingVertical: 10 }}>
-                Volume
+                Training
               </ThemedText>
               <Button
                 icon={(props) => <Ionicons name="sparkles" {...props} />}
@@ -164,9 +175,9 @@ export default function Progress() {
                 <ThemedText style={{ color: brandColor }}>Analyse</ThemedText>
               </Button>
             </ThemedView>
-            <ThemedView variant={"default"}>
-              <BarChartCanvas
-                data={data}
+            <ThemedView variant={"inContainer"}>
+              {/* <BarChartCanvas
+                data={data2}
                 x={(label) => x(label)}
                 y={(value) => y(value)}
                 barWidth={barWidth}
@@ -182,6 +193,11 @@ export default function Progress() {
                 }}
                 lightColor={""}
                 darkColor={""}
+              /> */}
+              <WeeklyBarChart
+                weeks={data}
+                activeWeekIndex={activeWeekIndex}
+                onWeekChange={setActiveWeekIndex}
               />
             </ThemedView>
           </ThemedView>
