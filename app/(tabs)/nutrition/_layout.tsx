@@ -122,7 +122,7 @@ export default function ScrollableMaskedTabView( { lightColor, darkColor }: MyTa
   );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tabBarBackgroundColor }}>
-      <MaterialTopTabs tabBar={renderCustomTabView}>
+      <MaterialTopTabs tabBar={(props) => renderCustomTabView({ ...props, tabs: TABS })}>
         {TABS.map((tab) => (
           <MaterialTopTabs.Screen key={tab.title} name={tab.title} />
         ))}
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   tabsContainer: {
     flexDirection: "row",
     height: 50,
-    margin: 16,
+    margin: 10,
     borderRadius: 10,
   },
   tabButton: {
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
-    paddingHorizontal: 69, // Add padding for better spacing
+    paddingHorizontal: 50, // Add padding for better spacing
   },
   iconTextContainer: {
     flexDirection: "row",
