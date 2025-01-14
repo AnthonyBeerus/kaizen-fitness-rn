@@ -6,13 +6,14 @@ import { GestureResponderEvent, StyleSheet } from "react-native";
 import { withTiming } from "react-native-reanimated";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
-import { Button, Card, IconButton, PaperProvider } from "react-native-paper";
+import { Button, Card, IconButton, PaperProvider, SegmentedButtons } from "react-native-paper";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import AnimatedText from "./AnimatedText";
 import { Folder, Weight } from "iconsax-react-native";
 import { ThemedMainContainer } from "../containers/ThemedMainContainerx";
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { SegmentedControl } from "../SegmentedControl";
 
 type BarChartCanvasProps = {
   data: { label: string; value: number; day?: string }[];
@@ -30,6 +31,8 @@ type BarChartCanvasProps = {
   lightColor: string,
     darkColor: string,
 };
+
+const options = ["Volume", "Sets", "Duration"];
 
 const BarChartCanvas: React.FC<BarChartCanvasProps> = ({
   data,
@@ -89,6 +92,7 @@ const BarChartCanvas: React.FC<BarChartCanvasProps> = ({
   };
   const [selsctedDay, setSelsctedDay] = useState<string>("Total");
 
+  const [selectedOption, setSelectedOption] = useState("Standard");
 
   return (
     <PaperProvider
@@ -140,7 +144,10 @@ const BarChartCanvas: React.FC<BarChartCanvasProps> = ({
               </Group>
             ))}
           </Canvas>
-          
+          <SegmentedControl
+            options={options}
+            selectedOption={selectedOption}
+            onOptionPress={setSelectedOption} lightColor={""} darkColor={""}/>
         </Card.Content>
       </Card>
     </PaperProvider>
