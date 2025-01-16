@@ -138,6 +138,18 @@ export default function Progress() {
     const [activeWeekIndex, setActiveWeekIndex] = useState(0);
 
     const [selectedOption, setSelectedOption] = useState("Standard");
+
+   const [totalVolumesPerWeek, setTotalVolumesPerWeek] = useState<number[]>([]);
+
+   useEffect(() => {
+     const calculateTotalVolumesPerWeek = () => {
+       const totals = data.map((weekData) => {
+         return weekData.reduce((acc, current) => acc + current.value, 0);
+       });
+       setTotalVolumesPerWeek(totals);
+     };
+     calculateTotalVolumesPerWeek();
+   }, [data]);
   return (
     <PaperProvider
       settings={{
@@ -171,7 +183,14 @@ export default function Progress() {
                 <ThemedText style={{ color: brandColor }}>Analyse</ThemedText>
               </Button>
             </ThemedView>
-            <ThemedView variant={"inContainer"} style={{borderRadius: 10}}>
+            <ThemedView variant={"inContainer"} style={{ borderRadius: 10 }}>
+              <ThemedText type={"smallTitle"}> Total Volume Goes here</ThemedText>
+              {/* Display the Total volume from the summy data, use animated text */}
+              {/* {totalVolumesPerWeek.map((volume, index) => (
+                <ThemedText key={index}>
+                  Week {index + 1} Total Volume: {volume} pounds
+                </ThemedText>
+              ))} */}
               <WeeklyBarChart
                 weeks={data}
                 activeWeekIndex={activeWeekIndex}
