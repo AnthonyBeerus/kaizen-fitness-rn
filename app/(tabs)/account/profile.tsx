@@ -46,7 +46,7 @@ export default function Profile() {
             <FlashList
               data={DATA}
               renderItem={({ item }) => (
-                <Link asChild href="../stats/stats">
+                <Link asChild href="../../stats/stats">
                   <Pressable onPress={() => console.log(item.title)}>
                     <ThemedMainContainer variant={"default"}>
                       <ThemedView variant={"inContainer"}>
