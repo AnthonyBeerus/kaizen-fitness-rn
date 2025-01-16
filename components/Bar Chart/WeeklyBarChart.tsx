@@ -21,6 +21,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { SegmentedControl } from "../SegmentedControl";
 import { ThemedText } from "../ThemedText";
+import { data } from "@/constants/bar-chart-data";
 
 type Week = Day[];
 
@@ -53,6 +54,7 @@ export const WeeklyBarChart = ({
     (BarChartWidth - BarChartGap * (activeWeek.length - 1)) / activeWeek.length;
   const MaxBarHeight = 120;
   const ScrollViewHeight = 70;
+  const activeWeekData = data[0]; 
 
   const handlePrevWeek = () => {
     const newIndex = Math.max(0, activeWeekIndex - 1);
@@ -135,12 +137,18 @@ export const WeeklyBarChart = ({
           marginHorizontal: (windowWidth - BarChartWidth) / 2,
         }}>
         {activeWeek.map((day, index) => (
-          <SingleBarChart
-            key={index}
-            maxHeight={MaxBarHeight}
-            width={BarWidth}
-            day={day}
-          />
+          <View style={{ width: BarWidth, flexDirection: "column" }} key={index}>
+            <ThemedText style={{ textAlign: "center" }}>
+              {day.value}
+            </ThemedText>
+            <SingleBarChart
+              key={index}
+              maxHeight={MaxBarHeight}
+              width={BarWidth}
+              day={day}
+            />
+          </View>
+          
         ))}
       </View>
 

@@ -10,6 +10,30 @@ const mondayFromThreeWeeksAgo = startOfWeek(
   }
 );
 
+const normalizeValue = (
+  value: number,
+  minVal: number,
+  maxVal: number
+): number => {
+  return (value - minVal) / (maxVal - minVal);
+};
+
+// Generate raw data first to find min/max values
+const rawData = new Array(7).fill(null).map((_, weekIndex) => {
+  return new Array(7).fill(null).map((__, dayIndex) => {
+    // Adjusted ranges to ensure max volume is around 15,000
+    const sets = Math.floor(Math.random() * 3) + 3; // 3 to 5 sets
+    const reps = Math.floor(Math.random() * 3) + 5; // 5 to 7 reps
+    const weight = Math.floor(Math.random() * 100) + 100; // 100 to 200 pounds
+    return sets * reps * weight;
+  });
+});
+
+// Find min and max values
+const allValues = rawData.flat();
+const minVolume = Math.min(...allValues);
+const maxVolume = Math.min(Math.max(...allValues), 15000); // Ensure max volume does not exceed 15,000
+
 // Generate data for a 7x7 grid (7 weeks, 7 days each)
 export const data = new Array(7).fill(null).map((_, weekIndex) => {
   return new Array(7).fill(null).map((__, dayIndex) => {
@@ -18,13 +42,24 @@ export const data = new Array(7).fill(null).map((_, weekIndex) => {
       mondayFromThreeWeeksAgo.getTime() + 86400000 * (weekIndex * 7 + dayIndex) // Add the corresponding number of days in milliseconds
     );
 
-    // Generate a random value for each day
-    const value = Math.random(); // between 0 and 1
+    // Adjusted ranges to ensure max volume is around 15,000
+    const sets = Math.floor(Math.random() * 3) + 3; // 3 to 5 sets
+    const reps = Math.floor(Math.random() * 3) + 5; // 5 to 7 reps
+    const weight = Math.floor(Math.random() * 100) +250; // 100 to 200 pounds
+    const value = sets * reps * weight;
 
-    // Return an object containing the date and random value
+    const maxValue= 9999;
+
+    // Ensure value does not exceed 15,000
+    const cappedValue = Math.min(value, maxValue);
+
+    // Normalize between 0-1 with max volume capped at 15,000
+    const normalizedValue = normalizeValue(cappedValue, 0, maxValue);
+
     return {
       day: day,
-      value: value,
+      value: cappedValue,
+      normalizedValue: normalizedValue,
     };
   });
 });

@@ -11,6 +11,7 @@ import { ThemedText } from "../ThemedText";
 export type Day = {
   day: Date;
   value: number; // 0 - 1
+  normalizedValue: number;
 };
 
 type SingleBarChartProps = {
@@ -30,10 +31,10 @@ export const SingleBarChart = ({
 }: SingleBarChartProps) => {
   const rStyle = useAnimatedStyle(() => {
     return {
-      height: withTiming(maxHeight * day.value),
-      opacity: withTiming(day.value),
+      height: withTiming(maxHeight * day.normalizedValue),
+      opacity: withTiming(day.normalizedValue),
     };
-  }, [day.value, maxHeight]);
+  }, [day.normalizedValue, maxHeight]);
 
   const barColor = useThemeColor(
     { light: lightColor, dark: darkColor },
