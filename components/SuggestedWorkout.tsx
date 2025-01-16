@@ -128,7 +128,11 @@ export const SuggestedWorkout: React.FC<SuggestedWorkoutProps> = ({
             <ThemedText style={{ color: brandColor }}>View Details</ThemedText>
           </Button>
         </ThemedView>
-        <Card style={{ backgroundColor: containerColor, justifyContent: "space-between", }}>
+        <Card
+          style={{
+            backgroundColor: containerColor,
+            justifyContent: "space-between",
+          }}>
           <Card.Content
             style={{
               flexDirection: "row",
@@ -151,7 +155,10 @@ export const SuggestedWorkout: React.FC<SuggestedWorkoutProps> = ({
                 <Button
                   icon={(props) => <Star {...props} />}
                   theme={{ colors: { primary: "#F04444" } }}
-                  style={{ backgroundColor: "#373737", borderRadius: 10 }}
+                  style={{
+                    backgroundColor: incontainerColor,
+                    borderRadius: 10,
+                  }}
                   onPress={() =>
                     console.log("Open library of Advanced Workouts")
                   }>
@@ -160,7 +167,10 @@ export const SuggestedWorkout: React.FC<SuggestedWorkoutProps> = ({
                 <Button
                   icon={(props) => <Timer1 {...props} />}
                   theme={{ colors: { primary: "#F04444" } }}
-                  style={{ backgroundColor: "#373737", borderRadius: 10 }}
+                  style={{
+                    backgroundColor: incontainerColor,
+                    borderRadius: 10,
+                  }}
                   onPress={() => console.log("Open Similarly timed workouts")}>
                   <ThemedText>30 min</ThemedText>
                 </Button>

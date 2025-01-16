@@ -4,6 +4,7 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { WorkoutOverview } from "@/components/WorkoutOverview";
+import { useThemeColor } from "@/hooks/useThemeColor";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FlashList } from "@shopify/flash-list";
 import { Bookmark, Car, Lock1, Play, Star, Timer1 } from "iconsax-react-native";
@@ -42,7 +43,33 @@ const cardData = [
 
 const localImage = require("../../../assets/images/workoutthumbnails/workoutplanthumbnail1.png");
 
+
+
 export default function Plans() {
+  const cardBackground = useThemeColor(
+    {
+      light: Colors.light.card,
+      dark: Colors.dark.card,
+    },
+    "containerBackground"
+  );
+  const buttonBackground = useThemeColor(
+    {
+      light: Colors.light.card,
+      dark: Colors.dark.card,
+    },
+    "background"
+  );
+
+  const iconColor = useThemeColor(
+    {
+      light: Colors.light.card,
+      dark: Colors.dark.card,
+    },
+    "icon"
+  );
+
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -54,9 +81,8 @@ export default function Plans() {
           renderItem={({ item }) => (
             <Card
               style={{
-                backgroundColor: "#272727",
+                backgroundColor: cardBackground,
                 justifyContent: "space-between",
-                
               }}>
               <Card.Content
                 style={{
@@ -85,16 +111,17 @@ export default function Plans() {
                 <ThemedView
                   variant={"inContainer"}
                   style={{ justifyContent: "center", gap: 20 }}>
-                  <ThemedText type="subtitle" style={{ color: "white" }}>
-                    {item.name}
-                  </ThemedText>
+                  <ThemedText type="subtitle">{item.name}</ThemedText>
                   <ThemedView
                     variant={"inContainer"}
                     style={{ flexDirection: "row", gap: 10 }}>
                     <Button
                       icon={(props) => <Star {...props} />}
                       theme={{ colors: { primary: "#F04444" } }}
-                      style={{ backgroundColor: "#272727", borderRadius: 10 }}
+                      style={{
+                        backgroundColor: buttonBackground,
+                        borderRadius: 10,
+                      }}
                       onPress={() =>
                         console.log("Open library of Advanced Workouts")
                       }>
@@ -103,7 +130,10 @@ export default function Plans() {
                     <Button
                       icon={(props) => <Timer1 {...props} />}
                       theme={{ colors: { primary: "#F04444" } }}
-                      style={{ backgroundColor: "#272727", borderRadius: 10 }}
+                      style={{
+                        backgroundColor: buttonBackground,
+                        borderRadius: 10,
+                      }}
                       onPress={() =>
                         console.log("Open Similarly timed workouts")
                       }>
@@ -113,7 +143,7 @@ export default function Plans() {
                 </ThemedView>
                 <IconButton
                   icon={(props) => <Bookmark {...props} />}
-                  iconColor="#fff"
+                  iconColor={iconColor}
                   size={30}
                   onPress={() => console.log("Start Suggested Workout")}
                 />
