@@ -16,7 +16,7 @@ import {
 
 const TABS = [
   { title: "diet", icon: "home-outline", iconActive: "person" },
-  { title: "hydratiion", icon: "settings-outline", iconActive: "settings" },
+  { title: "hydration", icon: "settings-outline", iconActive: "settings" },
   { title: "recipes", icon: "settings-outline", iconActive: "settings" },
 ];
 const Tab = createMaterialTopTabNavigator();

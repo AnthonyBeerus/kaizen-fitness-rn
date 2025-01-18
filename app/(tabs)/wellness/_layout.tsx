@@ -17,7 +17,7 @@ import { useTheme } from "react-native-paper";
 
 const TABS = [
   { title: "journal", icon: "home-outline", iconActive: "person" },
-  { title: "insights", icon: "settings-outline", iconActive: "settings" },
+  { title: "Insights", icon: "settings-outline", iconActive: "settings" },
   { title: "mood", icon: "settings-outline", iconActive: "settings" },
 ];
 

@@ -42,9 +42,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="ai/chat"
+        name="ai"
         options={{
-          title: "AI",
+          title: "aI",
         }}
       />
       <Tabs.Screen

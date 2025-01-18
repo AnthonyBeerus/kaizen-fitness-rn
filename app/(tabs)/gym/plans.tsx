@@ -39,6 +39,13 @@ const cardData = [
     name: "Endurance",
   },
   // Add more items here...
+  {
+    title: "Endurance Training",
+    subtitle: "Improve endurance with this plan",
+    duration: "10 weeks",
+    name: "Endurance",
+  },
+  
 ];
 
 const localImage = require("../../../assets/images/workoutthumbnails/workoutplanthumbnail1.png");
