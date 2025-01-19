@@ -116,7 +116,7 @@ export const WeeklyBarChart = ({
   }, [activeWeekIndex]);
 
 
-    const [selectedOption, setSelectedOption] = useState("Standard");
+    const [selectedOption, setSelectedOption] = useState("Volume");
 
   return (
     <View

@@ -137,7 +137,7 @@ export default function Progress() {
 
     const [activeWeekIndex, setActiveWeekIndex] = useState(0);
 
-    const [selectedOption, setSelectedOption] = useState("Standard");
+    const [selectedOption, setSelectedOption] = useState("Volume");
 
    const [totalVolumesPerWeek, setTotalVolumesPerWeek] = useState<number[]>([]);
 
