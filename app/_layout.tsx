@@ -33,7 +33,7 @@ export default function RootLayout() {
         screenOptions={{
             header: ({ options }) => (
               <ThemedHeader
-                variant="backAction"
+                variant="default"
                 title={options.title ?? "Default Title"}
               />
             ),
