@@ -4,6 +4,7 @@ import { ThemedView } from "./ThemedView";
 import { Appbar, IconButton, Searchbar } from "react-native-paper";
 import { ThemedText } from "./ThemedText";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React from "react";
 
 interface ThemedSeacrhbarProps {
   lightColor?: string;
@@ -34,6 +35,7 @@ const ThemedSearchbar: React.FC<ThemedSeacrhbarProps> = ({
       iconColor={iconColor}
       value=""
       placeholder="Search"
+      placeholderTextColor={iconColor}
       theme={{ colors: { primary: indicatorColor } }}
       style={[{ backgroundColor: searchbarColor, borderRadius: 10 }]}
     />
