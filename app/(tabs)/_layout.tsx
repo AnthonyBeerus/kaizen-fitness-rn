@@ -26,7 +26,16 @@ export default function TabLayout() {
           />
         ),
         tabBarStyle: {
-          backgroundColor: Colors[colorScheme ?? "light"].background,
+          position: "absolute",
+          bottom: 27,
+          left: 16,
+          right: 16,
+          height: 72,
+          elevation: 0,
+          backgroundColor: "white",
+          borderRadius: 16,
+          alignItems: "center",
+          justifyContent: "center",
         },
       }}>
       <Tabs.Screen
