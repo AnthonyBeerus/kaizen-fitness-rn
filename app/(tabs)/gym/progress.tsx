@@ -42,6 +42,7 @@ import { Link, router } from "expo-router";
 import { WeeklyBarChart } from "@/components/Bar Chart/WeeklyBarChart";
 import { data } from "@/constants/bar-chart-data";
 import { SegmentedControl } from "@/components/SegmentedControl";
+import { useScroll } from "@/components/ScrollContext";
 
 const DATA = [
   { id: "1", title: "Item 1" },
@@ -83,6 +84,13 @@ export default function Progress() {
     { light: Colors.light.containerBackground, dark: Colors.dark.containerBackground },
     "containerBackground"
   )
+  const backgroundColor = useThemeColor(
+    {
+      light: Colors.light.background,
+      dark: Colors.dark.background,
+    },
+    "background"
+  );
   const iconColor = useThemeColor(
     { light: Colors.light.icon, dark: Colors.dark.icon },
     "icon"
@@ -92,6 +100,7 @@ export default function Progress() {
       { light: Colors.light.brandColor, dark: Colors.dark.brandColor },
       "brandColor"
   )
+  
   const inverseButtonColor = useThemeColor(
           {
               light: Colors.dark.background,
@@ -141,6 +150,8 @@ export default function Progress() {
 
    const [totalVolumesPerWeek, setTotalVolumesPerWeek] = useState<number[]>([]);
 
+   const { scrollY } = useScroll();
+   
    useEffect(() => {
      const calculateTotalVolumesPerWeek = () => {
        const totals = data.map((weekData) => {
@@ -155,10 +166,14 @@ export default function Progress() {
       settings={{
         icon: (props) => <Edit {...props} />,
       }}>
-      <ParallaxScrollView
-        headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-        variant="headerImage">
-        {/* <ThemedSearchbar /> */}
+      {/* <ThemedSearchbar /> */}
+      <Animated.ScrollView
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
+        scrollEventThrottle={16} // Adjust this value to control animation smoothness
+        style={{ backgroundColor: backgroundColor }}>
         <ThemedView variant={"default"}>
           <ThemedView variant={"default"}>
             <ThemedView
@@ -184,7 +199,10 @@ export default function Progress() {
               </Button>
             </ThemedView>
             <ThemedView variant={"inContainer"} style={{ borderRadius: 10 }}>
-              <ThemedText type={"smallTitle"}> Total Volume Goes here</ThemedText>
+              <ThemedText type={"smallTitle"}>
+                {" "}
+                Total Volume Goes here
+              </ThemedText>
               {/* Display the Total volume from the summy data, use animated text */}
               {/* {totalVolumesPerWeek.map((volume, index) => (
                 <ThemedText key={index}>
@@ -199,7 +217,7 @@ export default function Progress() {
             </ThemedView>
           </ThemedView>
         </ThemedView>
-      </ParallaxScrollView>
+      </Animated.ScrollView>
     </PaperProvider>
   );
 }

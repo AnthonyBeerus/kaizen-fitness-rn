@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 // app/(tabs)/home/screen1.tsx
 import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { useScroll } from "@/components/ScrollContext";
 import ThemedSearchbar from "@/components/ThemedSearchbar";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -10,7 +11,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { FlashList } from "@shopify/flash-list";
 import { Bookmark, Car, Lock1, Play, Star, Timer1 } from "iconsax-react-native";
 import React from "react";
-import { View, Text, Image, ImageBackground } from "react-native";
+import { View, Text, Image, ImageBackground, Animated } from "react-native";
 import { Button, Card, IconButton } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
@@ -46,7 +47,48 @@ const cardData = [
     duration: "10 weeks",
     name: "Endurance",
   },
-  
+  {
+    title: "Endurance Training",
+    subtitle: "Improve endurance with this plan",
+    duration: "10 weeks",
+    name: "Endurance",
+  },
+  {
+    title: "Endurance Training",
+    subtitle: "Improve endurance with this plan",
+    duration: "10 weeks",
+    name: "Endurance",
+  },
+  {
+    title: "Endurance Training",
+    subtitle: "Improve endurance with this plan",
+    duration: "10 weeks",
+    name: "Endurance",
+  },
+  {
+    title: "Endurance Training",
+    subtitle: "Improve endurance with this plan",
+    duration: "10 weeks",
+    name: "Endurance",
+  },
+  {
+    title: "Endurance Training",
+    subtitle: "Improve endurance with this plan",
+    duration: "10 weeks",
+    name: "Endurance",
+  },
+  {
+    title: "Endurance Training",
+    subtitle: "Improve endurance with this plan",
+    duration: "10 weeks",
+    name: "Endurance",
+  },
+  {
+    title: "Endurance Training",
+    subtitle: "Improve endurance with this plan",
+    duration: "10 weeks",
+    name: "Endurance",
+  },
 ];
 
 const localImage = require("../../../assets/images/workoutthumbnails/workoutplanthumbnail1.png");
@@ -69,6 +111,14 @@ export default function Plans() {
     "background"
   );
 
+  const backgroundColor = useThemeColor(
+    {
+      light: Colors.light.containerBackground,
+      dark: Colors.dark.containerBackground,
+    },
+    "background"
+  );
+
   const iconColor = useThemeColor(
     {
       light: Colors.light.card,
@@ -77,12 +127,16 @@ export default function Plans() {
     "icon"
   );
 
+  const { scrollY } = useScroll();
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      variant="headerImage">
-      <ThemedSearchbar />
+    <Animated.ScrollView
+      onScroll={Animated.event(
+        [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+        { useNativeDriver: true }
+      )}
+      scrollEventThrottle={16} // Adjust this value to control animation smoothness
+      style={{ backgroundColor: backgroundColor }}>
       <ThemedView variant={"default"}>
         <FlashList
           ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
@@ -161,6 +215,6 @@ export default function Plans() {
           )}
         />
       </ThemedView>
-    </ParallaxScrollView>
+    </Animated.ScrollView>
   );
 }
