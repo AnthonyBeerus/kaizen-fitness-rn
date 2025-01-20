@@ -42,11 +42,11 @@ export default function Profile() {
         variant="headerImage">
         
         <ThemedView variant={"default"}>
-          {selectedPageTab === PageTabs.Stats && (
+          
             <FlashList
               data={DATA}
               renderItem={({ item }) => (
-                <Link asChild href="../../stats/stats">
+                <Link asChild href="../../../stats/stats">
                   <Pressable onPress={() => console.log(item.title)}>
                     <ThemedMainContainer variant={"default"}>
                       <ThemedView variant={"inContainer"}>
@@ -59,13 +59,6 @@ export default function Profile() {
               estimatedItemSize={10}
               ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             />
-          )}
-          {selectedPageTab === PageTabs.insights && (
-            <ThemedText>Insights</ThemedText>
-          )}
-          {selectedPageTab === PageTabs.Profile && (
-            <ThemedText>Profile</ThemedText>
-          )}
         </ThemedView>
       </ParallaxScrollView>
     </>

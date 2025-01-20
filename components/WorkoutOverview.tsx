@@ -164,7 +164,7 @@ export const WorkoutOverview: React.FC<WorkoutOverviewProps> = ({
             borderRadius: 10,
             justifyContent: "center",
           }}
-          onPress={() => router.push("../workout/routine-details")}>
+          onPress={() => router.push("../../../workout/routine-details")}>
           <ThemedText style={{ color: brandColor }}>View Details</ThemedText>
         </Button>
       </ThemedView>
