@@ -126,7 +126,6 @@ export const WeeklyBarChart = ({
         justifyContent: "center",
         alignItems: "center",
         marginVertical: 80,
-        marginHorizontal: -20,
       }}>
       <View
         style={{
