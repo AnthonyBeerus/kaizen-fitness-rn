@@ -9,6 +9,8 @@ import { ThemedView } from '@/components/ThemedView';
 import PageTabbutton, { PageTabButtonType } from '@/components/navigation/PageTabbutton';
 import { useState } from 'react';
 import React from 'react';
+import { SearchBar } from 'react-native-screens';
+import ThemedSearchbar from '@/components/ThemedSearchbar';
 
 export enum PageTabs {
   Meals,
@@ -30,7 +32,7 @@ export default function Recipes() {
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       variant="headerImage">
       <ThemedView variant={"default"}>
-          <ThemedText>Recipes</ThemedText>
+          <ThemedSearchbar/>
       </ThemedView>
     </ParallaxScrollView>
   );
