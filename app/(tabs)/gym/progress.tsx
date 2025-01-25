@@ -173,7 +173,7 @@ export default function Progress() {
           { useNativeDriver: true }
         )}
         scrollEventThrottle={16} // Adjust this value to control animation smoothness
-        style={{ backgroundColor: backgroundColor }}>
+        style={{ backgroundColor: backgroundColor, paddingHorizontal: 16 }}>
         <ThemedView variant={"default"}>
           <ThemedView variant={"default"}>
             <ThemedView
@@ -198,23 +198,18 @@ export default function Progress() {
                 <ThemedText style={{ color: brandColor }}>Analyse</ThemedText>
               </Button>
             </ThemedView>
-            <ThemedView variant={"inContainer"} style={{ borderRadius: 10 }}>
-              <ThemedText type={"smallTitle"}>
-                {" "}
-                Total Volume Goes here
-              </ThemedText>
               {/* Display the Total volume from the summy data, use animated text */}
               {/* {totalVolumesPerWeek.map((volume, index) => (
                 <ThemedText key={index}>
                   Week {index + 1} Total Volume: {volume} pounds
                 </ThemedText>
               ))} */}
-              <WeeklyBarChart
-                weeks={data}
-                activeWeekIndex={activeWeekIndex}
-                onWeekChange={setActiveWeekIndex}
-              />
-            </ThemedView>
+            <WeeklyBarChart
+              weeks={data}
+              activeWeekIndex={activeWeekIndex}
+              onWeekChange={setActiveWeekIndex}
+            />
+            
           </ThemedView>
         </ThemedView>
       </Animated.ScrollView>

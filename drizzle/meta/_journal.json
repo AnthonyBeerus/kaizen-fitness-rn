@@ -8,6 +8,13 @@
       "when": 1737443273306,
       "tag": "0000_slippery_junta",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1737832813643,
+      "tag": "0001_rich_orphan",
+      "breakpoints": true
     }
   ]
 }

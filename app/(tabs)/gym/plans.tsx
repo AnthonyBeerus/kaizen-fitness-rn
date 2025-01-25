@@ -1,101 +1,86 @@
-/* eslint-disable prettier/prettier */
-// app/(tabs)/home/screen1.tsx
-import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { useScroll } from "@/components/ScrollContext";
-import ThemedSearchbar from "@/components/ThemedSearchbar";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { WorkoutOverview } from "@/components/WorkoutOverview";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { FlashList } from "@shopify/flash-list";
-import { Bookmark, Car, Lock1, Play, Star, Timer1 } from "iconsax-react-native";
-import React from "react";
-import { View, Text, Image, ImageBackground, Animated } from "react-native";
+import { Bookmark, Star, Timer1 } from "iconsax-react-native";
+import React, { useEffect, useState } from "react";
+import { View, Image, Animated } from "react-native";
 import { Button, Card, IconButton } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { openDatabaseSync, useSQLiteContext } from "expo-sqlite";
+import { drizzle, useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { routines, Routine, workoutDays } from "@/db/FitnessData/fitnessSchema";
+import * as schema from "@/db/FitnessData/fitnessSchema";
+import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
+import { eq } from "drizzle-orm";
+import { SectionList } from "react-native";
+import { TouchableOpacity } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { ROUTINESDB } from "@/app/_layout";
+import { RoutineCard } from "@/components/RoutineCard";
 
-const cardData = [
-  {
-    title: "Workout Plans",
-    subtitle: "Choose a plan to get started",
-    duration: "6 weeks",
-    name: "Workout",
-  },
-  {
-    title: "Fitness Programs",
-    subtitle: "Select a program to improve fitness",
-    duration: "12 weeks",
-    name: "Fitness",
-  },
-  {
-    title: "Strength Training",
-    subtitle: "Build strength with this plan",
-    duration: "8 weeks",
-    name: "Strength",
-  },
-  {
-    title: "Endurance Training",
-    subtitle: "Improve endurance with this plan",
-    duration: "10 weeks",
-    name: "Endurance",
-  },
-  // Add more items here...
-  {
-    title: "Endurance Training",
-    subtitle: "Improve endurance with this plan",
-    duration: "10 weeks",
-    name: "Endurance",
-  },
-  {
-    title: "Endurance Training",
-    subtitle: "Improve endurance with this plan",
-    duration: "10 weeks",
-    name: "Endurance",
-  },
-  {
-    title: "Endurance Training",
-    subtitle: "Improve endurance with this plan",
-    duration: "10 weeks",
-    name: "Endurance",
-  },
-  {
-    title: "Endurance Training",
-    subtitle: "Improve endurance with this plan",
-    duration: "10 weeks",
-    name: "Endurance",
-  },
-  {
-    title: "Endurance Training",
-    subtitle: "Improve endurance with this plan",
-    duration: "10 weeks",
-    name: "Endurance",
-  },
-  {
-    title: "Endurance Training",
-    subtitle: "Improve endurance with this plan",
-    duration: "10 weeks",
-    name: "Endurance",
-  },
-  {
-    title: "Endurance Training",
-    subtitle: "Improve endurance with this plan",
-    duration: "10 weeks",
-    name: "Endurance",
-  },
-  {
-    title: "Endurance Training",
-    subtitle: "Improve endurance with this plan",
-    duration: "10 weeks",
-    name: "Endurance",
-  },
-];
+interface Section {
+  title: string;
+  data: Routine[];
+}
 
 const localImage = require("../../../assets/images/workoutthumbnails/workoutplanthumbnail1.png");
 
-
-
 export default function Plans() {
+  const db = useSQLiteContext();
+  const drizzleDb = drizzle(db, { schema });
+  useDrizzleStudio(db);
+  const [sections, setSections] = useState<Section[]>([]);
+
+  const { data } = useLiveQuery(
+    drizzleDb
+      .select()
+      .from(routines)
+      .leftJoin(workoutDays, eq(routines.id, workoutDays.routine_id))
+  );
+
+  useEffect(() => {
+    if (!data) return;
+
+    const formatedData = data?.map((item) => ({
+      ...item.routines,
+      workout_day_name: item.workout_days?.name,
+    }));
+
+    const groupedByRoutineId = formatedData?.reduce(
+      (acc: { [key: string]: Routine[] }, routine) => {
+        if (!acc[routine.id]) {
+          acc[routine.id] = [];
+        }
+        acc[routine.id].push(routine);
+        return acc;
+      },
+      {}
+    );
+
+    setSections(
+      Object.entries(groupedByRoutineId).map(([title, data]) => ({
+        title,
+        data,
+      }))
+    );
+  }, [data]);
+
+  const handleDeleteTask = async (routine_id: number) => {
+    try {
+      await drizzleDb.delete(routines).where(eq(routines.id, routine_id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAddDummyTask = async () => {
+    // Add to the first list by default
+    await drizzleDb.insert(routines).values({
+      name: `Task ${Math.floor(Math.random() * 1000)}`,
+    });
+  };
+  // Theme hooks from original Plans component
   const cardBackground = useThemeColor(
     {
       light: Colors.light.card,
@@ -103,6 +88,7 @@ export default function Plans() {
     },
     "containerBackground"
   );
+
   const buttonBackground = useThemeColor(
     {
       light: Colors.light.card,
@@ -135,86 +121,35 @@ export default function Plans() {
         [{ nativeEvent: { contentOffset: { y: scrollY } } }],
         { useNativeDriver: true }
       )}
-      scrollEventThrottle={16} // Adjust this value to control animation smoothness
+      scrollEventThrottle={16}
       style={{ backgroundColor: backgroundColor }}>
-      <ThemedView variant={"default"}>
-        <FlashList
-          ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
-          data={cardData}
-          renderItem={({ item }) => (
-            <Card
-              style={{
-                backgroundColor: cardBackground,
-                justifyContent: "space-between",
-              }}>
-              <Card.Content
-                style={{
-                  flexDirection: "row",
-                  gap: 10,
-                  justifyContent: "space-evenly",
-                }}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 10,
-                  }}>
-                  <Image
-                    source={localImage}
-                    style={{
-                      width: 80,
-                      height: 80,
-                      borderRadius: 20, // Custom radius
-                      flex: 1,
-                      paddingRight: 40,
-                    }}
-                  />
-                </View>
-                <ThemedView
-                  variant={"inContainer"}
-                  style={{ justifyContent: "center", gap: 20 }}>
-                  <ThemedText type="subtitle">{item.name}</ThemedText>
-                  <ThemedView
-                    variant={"inContainer"}
-                    style={{ flexDirection: "row", gap: 10 }}>
-                    <Button
-                      icon={(props) => <Star {...props} />}
-                      theme={{ colors: { primary: "#F04444" } }}
-                      style={{
-                        backgroundColor: buttonBackground,
-                        borderRadius: 10,
-                      }}
-                      onPress={() =>
-                        console.log("Open library of Advanced Workouts")
-                      }>
-                      <ThemedText>Advanced</ThemedText>
-                    </Button>
-                    <Button
-                      icon={(props) => <Timer1 {...props} />}
-                      theme={{ colors: { primary: "#F04444" } }}
-                      style={{
-                        backgroundColor: buttonBackground,
-                        borderRadius: 10,
-                      }}
-                      onPress={() =>
-                        console.log("Open Similarly timed workouts")
-                      }>
-                      <ThemedText>30 min</ThemedText>
-                    </Button>
-                  </ThemedView>
-                </ThemedView>
-                <IconButton
-                  icon={(props) => <Bookmark {...props} />}
-                  iconColor={iconColor}
-                  size={30}
-                  onPress={() => console.log("Start Suggested Workout")}
-                />
-              </Card.Content>
-            </Card>
-          )}
-        />
-      </ThemedView>
+      <SectionList
+        sections={sections}
+        renderItem={({ item }) => (
+          <RoutineCard routine={item} localImage={localImage} />
+        )}
+        renderSectionHeader={({ section }) => (
+          <ThemedView
+            variant={"default"}
+            style={{
+              height: 40,
+              justifyContent: "center",
+              paddingLeft: 16,
+              backgroundColor: backgroundColor,
+            }}>
+            <ThemedText>List:{section.title}</ThemedText>
+          </ThemedView>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        ItemSeparatorComponent={() => <ThemedView variant={"default"} />}
+        ListFooterComponent={
+          <Button
+            icon={(props) => <Ionicons name="add" {...props} />}
+            onPress={handleAddDummyTask}
+            children={undefined}
+          />
+        }
+      />
     </Animated.ScrollView>
   );
 }

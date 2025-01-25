@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet, Image, Platform, Animated } from 'react-native';
 
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
@@ -21,6 +21,9 @@ import { eq } from 'drizzle-orm';
 import { SectionList } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useScroll } from '@/components/ScrollContext';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { Colors } from '@/constants/Colors';
 
 interface Section{
   title: string;
@@ -81,43 +84,68 @@ export default function Recipes() {
       list_id: 1,
     });
   };
+
+  const { scrollY } = useScroll();
+   const backgroundColor = useThemeColor(
+      {
+        light: Colors.light.background,
+        dark: Colors.dark.background,
+      },
+      "background"
+    );
     
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      variant="headerImage">
-      <ThemedView variant={"default"}>
-        <ThemedSearchbar />
-        <SectionList
-          sections={sections}
-          renderItem={({ item }) => (
-            <ThemedView  
-              variant={'default'} 
-              style={{ 
-                flexDirection: 'row', 
-                justifyContent: 'space-between', 
-
-              }}>
-              <ThemedText>{item.name}</ThemedText>
-              <TouchableOpacity
-                onPress={() => handleDeleteTask(item.id)}>
-                <ThemedText>Delete</ThemedText>
-              </TouchableOpacity>
-            </ThemedView>
-          )}
-          renderSectionHeader={({ section }) => (
+    <Animated.ScrollView
+      onScroll={Animated.event(
+        [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+        { useNativeDriver: true }
+      )}
+      scrollEventThrottle={16} // Adjust this value to control animation smoothness
+      style={{ backgroundColor: backgroundColor, paddingHorizontal: 16 }}>
+      <ThemedSearchbar />
+      <Button
+        icon={(props) => <Ionicons name="add" {...props} />}
+        onPress={handleAddDummyTask}
+        children={undefined}
+      />
+      <SectionList
+        sections={sections}
+        renderItem={({ item }) => (
+          <ThemedView
+            variant={"default"}
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}>
+            <ThemedText>{item.name}</ThemedText>
+            <TouchableOpacity onPress={() => handleDeleteTask(item.id)}>
+              <ThemedText>Delete</ThemedText>
+            </TouchableOpacity>
+          </ThemedView>
+        )}
+        renderSectionHeader={({ section }) => (
+          <ThemedView
+            variant={"default"}
+            style={{
+              height: 40,
+              justifyContent: "center",
+              paddingLeft: 16,
+              backgroundColor: "red",
+            }}>
             <ThemedText>List:{section.title}</ThemedText>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-          ItemSeparatorComponent={() => <ThemedView variant={'default'} />}
-          ListFooterComponent={
-            <Button 
-              icon={(props) => <Ionicons name="add" {...props} />}
-              onPress={handleAddDummyTask} children={undefined}/>
-          }
-        />
-      </ThemedView>
-    </ParallaxScrollView>
+          </ThemedView>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        ItemSeparatorComponent={() => <ThemedView variant={"default"} />}
+        ListFooterComponent={
+          <Button
+            icon={(props) => <Ionicons name="add" {...props} />}
+            onPress={handleAddDummyTask}
+            children={undefined}
+          />
+        }
+      />
+    </Animated.ScrollView>
   );
 }
 

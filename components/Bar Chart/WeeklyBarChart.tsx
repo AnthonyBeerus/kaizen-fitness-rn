@@ -22,6 +22,7 @@ import Animated, {
 import { SegmentedControl } from "../SegmentedControl";
 import { ThemedText } from "../ThemedText";
 import { data } from "@/constants/bar-chart-data";
+import { ThemedView } from "../ThemedView";
 
 type Week = Day[];
 
@@ -119,93 +120,97 @@ export const WeeklyBarChart = ({
     const [selectedOption, setSelectedOption] = useState("Volume");
 
   return (
-    <View
-      style={{
-        height: ScrollViewHeight + MaxBarHeight,
-        width: windowWidth,
-        justifyContent: "center",
-        alignItems: "center",
-        marginVertical: 80,
-      }}>
+    <ThemedView variant={"inContainer"} style={{ flex: 1, paddingTop: 30 }}>
       <View
         style={{
-          height: MaxBarHeight,
-          flexDirection: "row",
-          gap: BarChartGap,
-          alignItems: "flex-end",
-          marginHorizontal: (windowWidth - BarChartWidth) / 2,
-        }}>
-        {activeWeek.map((day, index) => (
-          <View style={{ width: BarWidth, flexDirection: "column" }} key={index}>
-            <ThemedText style={{ textAlign: "center" }}>
-              {day.value}
-            </ThemedText>
-            <SingleBarChart
-              key={index}
-              maxHeight={MaxBarHeight}
-              width={BarWidth}
-              day={day}
-            />
-          </View>
-          
-        ))}
-      </View>
-
-      <View
-        style={{
+          height: ScrollViewHeight + MaxBarHeight,
           width: windowWidth,
-          height: ScrollViewHeight,
-          flexDirection: "column",
-          alignItems: "center",
           justifyContent: "center",
-          position: "relative",
+          alignItems: "center",
+          marginVertical: 80,
+          marginHorizontal: -15,
         }}>
-        <IconButton
-          icon={(props) => <ArrowLeft2 {...props} />}
-          theme={{ colors: { primary: iconColor } }}
-          mode="contained"
+        <View
           style={{
-            position: "absolute",
-            left: 80,
-            borderRadius: 10,
-            margin: 0,
-            backgroundColor: backgroundColor,
-            opacity: activeWeekIndex === 0 ? 0.5 : 1,
-            zIndex: 1,
-          }}
-          disabled={activeWeekIndex === 0}
-          onPress={handlePrevWeek}
-        />
+            height: MaxBarHeight,
+            flexDirection: "row",
+            gap: BarChartGap,
+            alignItems: "flex-end",
+            marginHorizontal: (windowWidth - BarChartWidth) / 2,
+          }}>
+          {activeWeek.map((day, index) => (
+            <View
+              style={{ width: BarWidth, flexDirection: "column" }}
+              key={index}>
+              <ThemedText style={{ textAlign: "center" }}>
+                {day.value}
+              </ThemedText>
+              <SingleBarChart
+                key={index}
+                maxHeight={MaxBarHeight}
+                width={BarWidth}
+                day={day}
+              />
+            </View>
+          ))}
+        </View>
 
-        <Animated.View style={animatedStyle}>
-          <ThemedText style={styles.label}>
-            week of {format(weeks[displayedWeekIndex][0].day, "d MMMM")}
-          </ThemedText>
-        </Animated.View>
-
-        <IconButton
-          icon={(props) => <ArrowRight2 {...props} />}
-          theme={{ colors: { primary: iconColor } }}
-          mode="contained"
+        <View
           style={{
-            position: "absolute",
-            right: 80,
-            borderRadius: 10,
-            margin: 0,
-            backgroundColor: backgroundColor,
-            opacity: activeWeekIndex === weeks.length - 1 ? 0.5 : 1,
-            zIndex: 1,
-          }}
-          disabled={activeWeekIndex === weeks.length - 1}
-          onPress={handleNextWeek}
+            width: windowWidth,
+            height: ScrollViewHeight,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "relative",
+          }}>
+          <IconButton
+            icon={(props) => <ArrowLeft2 {...props} />}
+            theme={{ colors: { primary: iconColor } }}
+            mode="contained"
+            style={{
+              position: "absolute",
+              left: 80,
+              borderRadius: 10,
+              margin: 0,
+              backgroundColor: backgroundColor,
+              opacity: activeWeekIndex === 0 ? 0.5 : 1,
+              zIndex: 1,
+            }}
+            disabled={activeWeekIndex === 0}
+            onPress={handlePrevWeek}
+          />
+
+          <Animated.View style={animatedStyle}>
+            <ThemedText style={styles.label}>
+              week of {format(weeks[displayedWeekIndex][0].day, "d MMMM")}
+            </ThemedText>
+          </Animated.View>
+
+          <IconButton
+            icon={(props) => <ArrowRight2 {...props} />}
+            theme={{ colors: { primary: iconColor } }}
+            mode="contained"
+            style={{
+              position: "absolute",
+              right: 80,
+              borderRadius: 10,
+              margin: 0,
+              backgroundColor: backgroundColor,
+              opacity: activeWeekIndex === weeks.length - 1 ? 0.5 : 1,
+              zIndex: 1,
+            }}
+            disabled={activeWeekIndex === weeks.length - 1}
+            onPress={handleNextWeek}
+          />
+        </View>
+        <SegmentedControl
+          options={options}
+          selectedOption={selectedOption}
+          onOptionPress={setSelectedOption}
         />
       </View>
-      <SegmentedControl
-        options={options}
-        selectedOption={selectedOption}
-        onOptionPress={setSelectedOption}
-      />
-    </View>
+    </ThemedView>
   );
 };
 
