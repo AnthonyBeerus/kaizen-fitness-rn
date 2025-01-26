@@ -15,6 +15,7 @@ import migrations from "@/drizzle/migrations";
 import { addDummyData } from "@/db/addDummyData";
 import { FitnessDatabase } from "@/db/FitnessData/FitnessDbSeed";
 import { add } from "date-fns";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 // Prevent the splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -53,28 +54,27 @@ export default function RootLayout() {
   }
 
   return (
-      <SQLiteProvider
-        databaseName={ROUTINESDB}
-        options={{ enableChangeListener: true }}
-        >
-          
-
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <Stack
-            screenOptions={{
-              header: ({ options }) => (
-                <ThemedHeader
-                  variant="default"
-                  title={options.title ?? "Default Title"}
-                />
-              ),
-            }}>
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </GestureHandlerRootView>
-      </SQLiteProvider>
-    
+    <GestureHandlerRootView style={{ flex: 1 }}>
+     
+        <BottomSheetModalProvider> 
+          <SQLiteProvider
+            databaseName={ROUTINESDB}
+            options={{ enableChangeListener: true }}>
+            <Stack
+              screenOptions={{
+                header: ({ options }) => (
+                  <ThemedHeader
+                    variant="default"
+                    title={options.title ?? "Default Title"}
+                  />
+                ),
+              }}>
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+          </SQLiteProvider>
+        </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
