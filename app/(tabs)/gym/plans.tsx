@@ -3,7 +3,13 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { Bookmark, Star, Timer1 } from "iconsax-react-native";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { View, Image, Animated, StyleSheet } from "react-native";
 import { Button, Card, IconButton } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
@@ -18,10 +24,18 @@ import { TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { ROUTINESDB } from "@/app/_layout";
 import { RoutineCard } from "@/components/RoutineCard";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetFooter, BottomSheetTextInput, BottomSheetView, useBottomSheetModal } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFooter,
+  BottomSheetTextInput,
+  BottomSheetView,
+  useBottomSheetModal,
+} from "@gorhom/bottom-sheet";
 import ThemedBottomSheetModal from "@/components/ThemedBottomSheetModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { BottomSheetDefaultFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter/types";
+import { Picker } from "@react-native-picker/picker";
+
 
 interface Section {
   title: string;
@@ -51,12 +65,22 @@ export default function Plans() {
       workout_day_name: item.workout_days?.name,
     }));
 
+    // Create a map to track unique routine IDs
+    const uniqueRoutineIds = new Map<number, Routine>();
+
     const groupedByRoutineId = formatedData?.reduce(
       (acc: { [key: string]: Routine[] }, routine) => {
-        if (!acc[routine.id]) {
-          acc[routine.id] = [];
+        // Use a unique key for each routine
+        const key = uniqueRoutineIds.has(routine.id)
+          ? `${routine.id}-${uniqueRoutineIds.get(routine.id)!.name}`
+          : `${routine.id}`;
+
+        if (!acc[key]) {
+          acc[key] = [];
         }
-        acc[routine.id].push(routine);
+
+        acc[key].push(routine);
+        uniqueRoutineIds.set(routine.id, routine);
         return acc;
       },
       {}
@@ -78,8 +102,7 @@ export default function Plans() {
     }
   };
 
-  
-  // Theme hooks from original Plans component
+  // Theme hooks
   const cardBackground = useThemeColor(
     {
       light: Colors.light.card,
@@ -111,8 +134,6 @@ export default function Plans() {
     "background"
   );
 
-
-
   const iconColor = useThemeColor(
     {
       light: Colors.light.card,
@@ -134,13 +155,48 @@ export default function Plans() {
   }, []);
 
   const handleAddDummyTask = async () => {
-    // Add to the first list by default
     await drizzleDb.insert(routines).values({
       name: `Task ${Math.floor(Math.random() * 1000)}`,
       difficulty_level: "Beginner",
       estimated_weeks: 4,
     });
-    
+  };
+
+  // Add form state
+  const [routineName, setRoutineName] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("Beginner");
+  const [selectedWeeks, setSelectedWeeks] = useState("4");
+
+  // Define difficulty levels array
+  const difficultyLevels = ["Beginner", "Intermediate", "Advanced"];
+
+  // Modified handleAddRoutine function
+  const handleAddRoutine = async () => {
+    try {
+      // Validate form data
+      if (!routineName.trim()) {
+        // You might want to add proper error handling/messaging here
+        console.error("Routine name is required");
+        return;
+      }
+
+      // Insert the new routine with form data
+      await drizzleDb.insert(routines).values({
+        name: routineName.trim(),
+        difficulty_level: selectedDifficulty,
+        estimated_weeks: parseInt(selectedWeeks),
+      });
+
+      // Reset form
+      setRoutineName("");
+      setSelectedDifficulty("Beginner");
+      setSelectedWeeks("4");
+
+      // Close modal
+      dismiss();
+    } catch (error) {
+      console.error("Error adding routine:", error);
+    }
   };
 
   // renders
@@ -149,7 +205,7 @@ export default function Plans() {
       <BottomSheetFooter {...props} bottomInset={24}>
         <View style={styles.footerContainer}>
           <Button
-            onPress={handleAddDummyTask}
+            onPress={handleAddRoutine}
             style={{ backgroundColor: buttonBackground }}
             icon={(props) => <Ionicons name="add" {...props} />}
             mode="contained">
@@ -157,7 +213,13 @@ export default function Plans() {
           </Button>
           <Button
             style={{ backgroundColor: cancelbuttonBackground }}
-            onPress={() => dismiss()}
+            onPress={() => {
+              // Reset form on cancel
+              setRoutineName("");
+              setSelectedDifficulty("Beginner");
+              setSelectedWeeks("4");
+              dismiss();
+            }}
             icon={(props) => <Ionicons name="close" {...props} />}
             mode="contained">
             Cancel
@@ -165,13 +227,13 @@ export default function Plans() {
         </View>
       </BottomSheetFooter>
     ),
-    []
+    [routineName, selectedDifficulty, selectedWeeks] // Add dependencies
   );
 
-  
-
   return (
-    <ThemedView variant={"default"}>
+    <ThemedView
+      variant={"inContainer"}
+      style={{ flex: 1, backgroundColor: backgroundColor }}>
       <Animated.ScrollView
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -215,17 +277,92 @@ export default function Plans() {
         />
         <BottomSheetModal
           ref={bottomSheetModalRef}
-          index={0}
+          index={1}
           backgroundStyle={{ backgroundColor: backgroundColor }}
           handleIndicatorStyle={{ backgroundColor: iconColor }}
           footerComponent={renderFooter}
           enablePanDownToClose={true}
-          snapPoints={["50%", "90%"]}
+          snapPoints={["70%", "90%"]}
           onChange={handleSheetChanges}>
           <BottomSheetView style={{ padding: 16, gap: 20 }}>
-            <ThemedText>Bottom Sheet Content</ThemedText>
-            <BottomSheetTextInput style={{backgroundColor: cardBackground}} />
-            
+            <ThemedView variant={"default"} style={{ alignItems: "center" }}>
+              <ThemedText type="title">Add Routine</ThemedText>
+            </ThemedView>
+            <BottomSheetTextInput
+              style={{ backgroundColor: cardBackground }}
+              placeholder="Routine Name"
+              placeholderTextColor={iconColor}
+              value={routineName}
+              onChangeText={setRoutineName}
+            />
+            <ThemedView
+              variant={"default"}
+              style={{ backgroundColor: cardBackground, padding: 10 }}>
+              <ThemedText>Difficulty Level</ThemedText>
+              <Picker
+                selectedValue={selectedDifficulty}
+                style={{
+                  height: 50,
+                  width: "100%",
+                  color: iconColor,
+                  backgroundColor: cardBackground,
+                }}
+                itemStyle={{
+                  color: iconColor,
+                  borderRadius: 10,
+                  backgroundColor: cardBackground,
+                }}
+                mode="dropdown"
+                dropdownIconColor={iconColor}
+                onValueChange={(itemValue) => setSelectedDifficulty(itemValue)}>
+                {difficultyLevels.map((level) => (
+                  <Picker.Item
+                    key={level}
+                    label={level}
+                    value={level}
+                    style={{
+                      color: iconColor,
+                      borderRadius: 10,
+                      backgroundColor: cardBackground,
+                    }}
+                  />
+                ))}
+              </Picker>
+            </ThemedView>
+            <ThemedView
+              variant={"default"}
+              style={{ backgroundColor: cardBackground, padding: 10 }}>
+              <ThemedText>Estimated Weeks</ThemedText>
+              <Picker
+                selectedValue={selectedWeeks}
+                style={{
+                  height: 50,
+                  width: "100%",
+                  color: iconColor,
+                  backgroundColor: cardBackground,
+                }}
+                itemStyle={{
+                  color: iconColor,
+                  borderRadius: 10,
+                  backgroundColor: cardBackground,
+                }}
+                mode="dropdown"
+                dropdownIconColor={iconColor}
+                onValueChange={(itemValue) => setSelectedWeeks(itemValue)}>
+                {[4, 5, 6, 7, 8, 9, 10, 11, 12].map((week) => (
+                  <Picker.Item
+                    key={week}
+                    label={week.toString()}
+                    value={week.toString()}
+                    style={{
+                      color: iconColor,
+                      borderRadius: 10,
+                      backgroundColor: cardBackground,
+                    }}
+                  />
+                ))}
+              </Picker>
+            </ThemedView>
           </BottomSheetView>
         </BottomSheetModal>
       </Animated.ScrollView>
