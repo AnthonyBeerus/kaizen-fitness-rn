@@ -154,14 +154,6 @@ export default function Plans() {
     console.log("handleSheetChanges", index);
   }, []);
 
-  const handleAddDummyTask = async () => {
-    await drizzleDb.insert(routines).values({
-      name: `Task ${Math.floor(Math.random() * 1000)}`,
-      difficulty_level: "Beginner",
-      estimated_weeks: 4,
-    });
-  };
-
   // Add form state
   const [routineName, setRoutineName] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("Beginner");
@@ -267,13 +259,6 @@ export default function Plans() {
           )}
           keyExtractor={(item) => item.id.toString()}
           ItemSeparatorComponent={() => <ThemedView variant={"default"} />}
-          ListFooterComponent={
-            <Button
-              icon={(props) => <Ionicons name="add" {...props} />}
-              onPress={handleAddDummyTask}
-              children={undefined}
-            />
-          }
         />
         <BottomSheetModal
           ref={bottomSheetModalRef}
